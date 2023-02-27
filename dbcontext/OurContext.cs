@@ -9,5 +9,6 @@ namespace dbcontext {
     public class OurContext : DbContext {
         public OurContext(DbContextOptions options) : base(options) { }
         public DbSet<Medewerker> medewerkers { get; set; }
+        public DbSet<TalentManager> talentmanagers { get; set; }
     }
 }

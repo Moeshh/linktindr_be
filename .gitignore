@@ -1,3 +1,5 @@
 /.vs/**
 */obj/**
 */bin/**
+/Linktindr_be/appsettings.json
+/Linktindr_be/_appsettings.json
