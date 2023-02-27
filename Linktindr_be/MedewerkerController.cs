@@ -19,16 +19,21 @@ namespace Linktindr_be
         [HttpGet]
         public IEnumerable<Medewerker> Get()
         {
-            Medewerker m = new Medewerker();
-            m.FirstName = "Fred";
+            return OU.medewerkers;
+        }
+
+        [HttpGet("demomedewerkeraanmaken/{voornaam}")]
+        public string aanmaken(string voornaam) { 
+            
+                        Medewerker m = new Medewerker();
+            m.FirstName = voornaam;
             m.LastName = "Fred";
             m.Postcode = "Fred";
             m.HouseNumber = "Fred";
             OU.Add(m);
             OU.SaveChanges();
-
-            return OU.medewerkers;
-        }
+            return "gelukt";
+            }
 
         // GET api/<MedewerkerController>/5
         [HttpGet("{id}")]
