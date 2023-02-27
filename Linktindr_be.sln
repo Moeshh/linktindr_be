@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33403.182
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Linktindr_be", "Linktindr_be\Linktindr_be.csproj", "{A1D6A89D-FB02-49D4-B123-AFA426298D3E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dbcontext", "dbcontext\dbcontext.csproj", "{C6391FB7-E212-4695-84D4-FB9993E75BE7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A1D6A89D-FB02-49D4-B123-AFA426298D3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1D6A89D-FB02-49D4-B123-AFA426298D3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1D6A89D-FB02-49D4-B123-AFA426298D3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1D6A89D-FB02-49D4-B123-AFA426298D3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6391FB7-E212-4695-84D4-FB9993E75BE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6391FB7-E212-4695-84D4-FB9993E75BE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6391FB7-E212-4695-84D4-FB9993E75BE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6391FB7-E212-4695-84D4-FB9993E75BE7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {37F4D073-90A9-4CFE-8E69-2B8F43F25B43}
+	EndGlobalSection
+EndGlobal
