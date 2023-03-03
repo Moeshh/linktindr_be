@@ -16,36 +16,29 @@ namespace Linktindr_be {
 
         // GET: api/<ValuesController>
         [HttpGet]
-        public IEnumerable<TalentManager> Get() {
+        public IEnumerable<TalentManager> Get()
+        {
+            return OC.talentmanager.Select(t => new TalentManager
+            {
+                Id = t.Id,
+                FirstName = t.FirstName,
+                LastName = t.LastName,
+                Email = t.Email,
+                Telephone = t.Telephone
+            }).ToList();
+        }
+
+        [HttpGet("aanmaken/{voornaam}&{achternaam}&{telefoon}&{email}")]
+        public string aanmaken(string voornaam, string achternaam, string telefoon, string email)
+        {
             TalentManager t = new TalentManager();
-            t.FirstName = "Claudia";
-            t.LastName = "Kers";
-            t.Email = "Claudia@YoungCapital.com";
-            t.Telephone = 0612345678;
+            t.FirstName = voornaam;
+            t.LastName = achternaam;
+            t.Email = email;
+            t.Telephone = telefoon;
             OC.Add(t);
             OC.SaveChanges();
-            return OC.talentmanagers;
-        }
-
-        // GET api/<ValuesController>/5
-        [HttpGet("{id}")]
-        public string Get(int id) {
-            return "value";
-        }
-
-        // POST api/<ValuesController>
-        [HttpPost]
-        public void Post([FromBody] string value) {
-        }
-
-        // PUT api/<ValuesController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value) {
-        }
-
-        // DELETE api/<ValuesController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id) {
+            return "gelukt. " + t.FirstName + " " + t.LastName + " toegevoegd";
         }
     }
 }
