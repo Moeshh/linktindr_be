@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace Linktindr_be
+namespace Linktindr_be.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -12,20 +12,21 @@ namespace Linktindr_be
         OurContext OU;
         public MedewerkerController(OurContext oU)
         {
-            this.OU = oU;
+            OU = oU;
         }
 
         // GET: api/<MedewerkerController>
         [HttpGet]
         public IEnumerable<Medewerker> Get()
         {
-            return OU.medewerkers;
+            return OU.medewerker;
         }
 
         [HttpGet("demomedewerkeraanmaken/{voornaam}")]
-        public string aanmaken(string voornaam) { 
-            
-                        Medewerker m = new Medewerker();
+        public string aanmaken(string voornaam)
+        {
+
+            Medewerker m = new Medewerker();
             m.FirstName = voornaam;
             m.LastName = "Fred";
             m.Postcode = "Fred";
@@ -33,7 +34,7 @@ namespace Linktindr_be
             OU.Add(m);
             OU.SaveChanges();
             return "gelukt";
-            }
+        }
 
         // GET api/<MedewerkerController>/5
         [HttpGet("{id}")]
