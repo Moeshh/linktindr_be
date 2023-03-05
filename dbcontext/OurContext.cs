@@ -12,11 +12,13 @@ namespace dbcontext
     {
         public OurContext(DbContextOptions options) : base(options) { }
         public DbSet<Medewerker> medewerker { get; set; }
-        public DbSet<TalentManager> talentmanager { get; set; }
+        public DbSet<Vacature> vacatures { get; set; }
+        public DbSet<TalentManager> talentmanagers { get; set; }
+        public DbSet<Sollicitatie> sollicitaties { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySQL("server=yc2302sql.mysql.database.azure.com; port=3306; database=yc2302; user=yc2302;password=Water123");
+            optionsBuilder.UseMySQL("server=yc2302sql.mysql.database.azure.com; port=3306; database=yc2302; user=yc2302; password=Water123");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -26,7 +28,7 @@ namespace dbcontext
             modelBuilder.Entity<Medewerker>(entity =>
             {
                 entity.HasKey(e => e.Id);
-                entity.Property(e => e.Talentmanager_id).IsRequired();
+                entity.Property(e => e.IdTalentManager).IsRequired();
             });
 
             modelBuilder.Entity<TalentManager>(entity =>
@@ -34,7 +36,6 @@ namespace dbcontext
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Email).IsRequired();
             });
-
         }
     }
 

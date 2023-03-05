@@ -22,8 +22,9 @@ namespace Linktindr_be
             return OU.medewerker;
         }
 
-        [HttpGet("{mni}")]
-        public string aanmaken(Medewerker_NoId mni) { 
+        //GET (maak nieuwe medewerker aan) api/<MedewerkerController>/[Medewerker_NoId]
+        [HttpPost("add")]
+        public string Aanmaken(Medewerker_NoId mni) { 
             
             Medewerker m = new Medewerker();
             m.IdTalentManager = mni.IdTalentManager;
@@ -45,29 +46,29 @@ namespace Linktindr_be
             return "gelukt";
             }
 
-        // GET api/<MedewerkerController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<MedewerkerController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<MedewerkerController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<MedewerkerController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+        //// GET api/<MedewerkerController>/5
+        //[HttpGet("{id}")]
+        //public string Get(int id)
+        //{
+        //    return "value";
+        //}
+        //
+        //// POST api/<MedewerkerController>
+        //[HttpPost]
+        //public void Post([FromBody] string value)
+        //{
+        //}
+        //
+        //// PUT api/<MedewerkerController>/5
+        //[HttpPut("{id}")]
+        //public void Put(int id, [FromBody] string value)
+        //{
+        //}
+        //
+        //// DELETE api/<MedewerkerController>/5
+        //[HttpDelete("{id}")]
+        //public void Delete(int id)
+        //{
+        //}
     }
 }

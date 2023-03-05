@@ -18,7 +18,7 @@ namespace Linktindr_be {
         [HttpGet]
         public IEnumerable<TalentManager> Get()
         {
-            return OC.talentmanager.Select(t => new TalentManager
+            return OC.talentmanagers.Select(t => new TalentManager
             {
                 Id = t.Id,
                 FirstName = t.FirstName,
@@ -28,17 +28,17 @@ namespace Linktindr_be {
             }).ToList();
         }
 
-        [HttpGet("aanmaken/{voornaam}&{achternaam}&{telefoon}&{email}")]
-        public string aanmaken(string voornaam, string achternaam, string telefoon, string email)
+        [HttpPost("add")]
+        public string aanmaken(TalentManager_NoId tni)
         {
             TalentManager t = new TalentManager();
-            t.FirstName = voornaam;
-            t.LastName = achternaam;
-            t.Email = email;
-            t.Telephone = telefoon;
+            t.FirstName = tni.FirstName;
+            t.LastName = tni.LastName;
+            t.Email = tni.Email;
+            t.Telephone = tni.Telephone;
             OC.Add(t);
             OC.SaveChanges();
-            return "gelukt. " + t.FirstName + " " + t.LastName + " toegevoegd";
+            return "gelukt";
         }
     }
 }
