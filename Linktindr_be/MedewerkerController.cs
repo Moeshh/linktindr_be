@@ -22,24 +22,24 @@ namespace Linktindr_be
             return OU.medewerker;
         }
 
-        [HttpGet("demomedewerkeraanmaken/{voornaam}")]
-        public string aanmaken(string voornaam) { 
+        [HttpGet("{mni}")]
+        public string aanmaken(Medewerker_NoId mni) { 
             
             Medewerker m = new Medewerker();
-            m.Talentmanager_id = 12;
-            m.FirstName = voornaam;
-            m.LastName = "Fred";
-            m.Postcode = "Fred";
-            m.Housenumber = "Fred";
-            m.Dateofbirth = new DateTime(2008, 5, 1, 8, 30, 52);
-            m.Postcode = "Fred";
-            m.Housenumber = "Fred";
-            m.Email = "Fred";
-            m.Telephone = "Fred";
-            m.Radius = 12;
-            m.Specialization = 3;
-            m.Photo = "Fred";
-            m.Profiletext = "Fred";
+            m.IdTalentManager = mni.IdTalentManager;
+            m.FirstName = mni.FirstName;
+            m.LastName = mni.LastName;
+            m.PostCode = mni.PostCode;
+            m.HouseNumber = mni.HouseNumber;
+            m.DateOfBirth = mni.DateOfBirth;
+            m.PostCode = mni.PostCode;
+            m.HouseNumber = mni.HouseNumber;
+            m.Email = mni.Email;
+            m.Telephone = mni.Telephone;
+            m.Radius = mni.Radius;
+            m.Specialization = mni.Specialization;
+            m.Photo = mni.Photo;
+            m.ProfileText = mni.ProfileText;
             OU.Add(m);
             OU.SaveChanges();
             return "gelukt";
