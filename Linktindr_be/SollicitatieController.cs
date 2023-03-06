@@ -18,14 +18,14 @@ namespace Linktindr_be {
         [HttpGet]
         public IEnumerable<Sollicitatie> Get()
         {
-            return OC.sollicitaties.Select(s => new Sollicitatie
+            return OC.sollicitatie.Select(s => new Sollicitatie
             {
                 Id = s.Id,
-                IdMedewerker = s.IdMedewerker,
-                IdVacature = s.IdVacature,
+                Medewerker_Id = s.Medewerker_Id,
+                Vacature_Id = s.Vacature_Id,
                 Status = s.Status,
                 Medewerker_akkoord = s.Medewerker_akkoord,
-                Werkgever_akkoord = s.Werkgever_akkoord
+                Opdrachtgever_akkoord = s.Opdrachtgever_akkoord
             }).ToList();
         }
 
@@ -34,11 +34,11 @@ namespace Linktindr_be {
         {
             Sollicitatie s = new Sollicitatie();
 
-            s.IdMedewerker = sni.IdMedewerker;
-            s.IdVacature = sni.IdVacature;
+            s.Medewerker_Id = sni.Medewerker_Id;
+            s.Vacature_Id = sni.Vacature_Id;
             s.Status = sni.Status;
             s.Medewerker_akkoord = sni.Medewerker_akkoord;
-            s.Werkgever_akkoord = sni.Werkgever_akkoord;
+            s.Opdrachtgever_akkoord = sni.Opdrachtgever_akkoord;
 
             OC.Add(s);
             OC.SaveChanges();

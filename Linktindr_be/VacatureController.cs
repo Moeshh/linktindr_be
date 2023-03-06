@@ -19,7 +19,7 @@ namespace Linktindr_be
         [HttpGet]
         public IEnumerable<Vacature> Get()
         {
-            return OU.vacatures;
+            return OU.vacature;
         }
 
         [HttpPost("add")]
@@ -29,10 +29,10 @@ namespace Linktindr_be
             v.Opdrachtgever_id = vni.Opdrachtgever_id;
             v.Title = vni.Title;
             v.Description = vni.Description;
-            v.Specialisation = vni.Specialisation;
+            v.Uitstroomrichting = vni.Uitstroomrichting;
             v.Location = vni.Location;
             v.Startdate = vni.Startdate;
-            v.Enddate = vni.Enddate;
+            v.Einddate = vni.Einddate;
 
             OU.Add(v);
             OU.SaveChanges();

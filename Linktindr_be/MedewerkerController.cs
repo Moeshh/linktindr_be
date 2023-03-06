@@ -27,7 +27,7 @@ namespace Linktindr_be
         public string Aanmaken(Medewerker_NoId mni) { 
             
             Medewerker m = new Medewerker();
-            m.IdTalentManager = mni.IdTalentManager;
+            m.TalentManager_Id = mni.TalentManager_Id;
             m.FirstName = mni.FirstName;
             m.LastName = mni.LastName;
             m.PostCode = mni.PostCode;
@@ -38,7 +38,7 @@ namespace Linktindr_be
             m.Email = mni.Email;
             m.Telephone = mni.Telephone;
             m.Radius = mni.Radius;
-            m.Specialization = mni.Specialization;
+            m.Uitstroomrichting = mni.Uitstroomrichting;
             m.Photo = mni.Photo;
             m.ProfileText = mni.ProfileText;
             OU.Add(m);

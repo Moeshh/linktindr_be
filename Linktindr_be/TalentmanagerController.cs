@@ -18,7 +18,7 @@ namespace Linktindr_be {
         [HttpGet]
         public IEnumerable<TalentManager> Get()
         {
-            return OC.talentmanagers.Select(t => new TalentManager
+            return OC.talentmanager.Select(t => new TalentManager
             {
                 Id = t.Id,
                 FirstName = t.FirstName,

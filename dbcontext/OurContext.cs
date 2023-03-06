@@ -12,9 +12,9 @@ namespace dbcontext
     {
         public OurContext(DbContextOptions options) : base(options) { }
         public DbSet<Medewerker> medewerker { get; set; }
-        public DbSet<Vacature> vacatures { get; set; }
-        public DbSet<TalentManager> talentmanagers { get; set; }
-        public DbSet<Sollicitatie> sollicitaties { get; set; }
+        public DbSet<Vacature> vacature { get; set; }
+        public DbSet<TalentManager> talentmanager { get; set; }
+        public DbSet<Sollicitatie> sollicitatie { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -28,7 +28,7 @@ namespace dbcontext
             modelBuilder.Entity<Medewerker>(entity =>
             {
                 entity.HasKey(e => e.Id);
-                entity.Property(e => e.IdTalentManager).IsRequired();
+                entity.Property(e => e.TalentManager_Id).IsRequired();
             });
 
             modelBuilder.Entity<TalentManager>(entity =>
