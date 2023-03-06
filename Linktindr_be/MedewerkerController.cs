@@ -19,40 +19,56 @@ namespace Linktindr_be
         [HttpGet]
         public IEnumerable<Medewerker> Get()
         {
+            return OU.medewerker;
+        }
+
+        //GET (maak nieuwe medewerker aan) api/<MedewerkerController>/[Medewerker_NoId]
+        [HttpPost("add")]
+        public string Aanmaken(Medewerker_NoId mni) { 
+            
             Medewerker m = new Medewerker();
-            m.FirstName = "Fred";
-            m.LastName = "Fred";
-            m.Postcode = "Fred";
-            m.HouseNumber = "Fred";
+            m.IdTalentManager = mni.IdTalentManager;
+            m.FirstName = mni.FirstName;
+            m.LastName = mni.LastName;
+            m.PostCode = mni.PostCode;
+            m.HouseNumber = mni.HouseNumber;
+            m.DateOfBirth = mni.DateOfBirth;
+            m.PostCode = mni.PostCode;
+            m.HouseNumber = mni.HouseNumber;
+            m.Email = mni.Email;
+            m.Telephone = mni.Telephone;
+            m.Radius = mni.Radius;
+            m.Specialization = mni.Specialization;
+            m.Photo = mni.Photo;
+            m.ProfileText = mni.ProfileText;
             OU.Add(m);
             OU.SaveChanges();
+            return "gelukt";
+            }
 
-            return OU.medewerkers;
-        }
-
-        // GET api/<MedewerkerController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<MedewerkerController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<MedewerkerController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<MedewerkerController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+        //// GET api/<MedewerkerController>/5
+        //[HttpGet("{id}")]
+        //public string Get(int id)
+        //{
+        //    return "value";
+        //}
+        //
+        //// POST api/<MedewerkerController>
+        //[HttpPost]
+        //public void Post([FromBody] string value)
+        //{
+        //}
+        //
+        //// PUT api/<MedewerkerController>/5
+        //[HttpPut("{id}")]
+        //public void Put(int id, [FromBody] string value)
+        //{
+        //}
+        //
+        //// DELETE api/<MedewerkerController>/5
+        //[HttpDelete("{id}")]
+        //public void Delete(int id)
+        //{
+        //}
     }
 }
