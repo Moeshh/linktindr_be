@@ -11,7 +11,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<OurContext>(
-    options => { options.UseSqlServer(builder.Configuration.GetConnectionString("Default")); }
+    options => { options.UseMySQL(builder.Configuration.GetConnectionString("Default")); }
     );
 
 var app = builder.Build();
