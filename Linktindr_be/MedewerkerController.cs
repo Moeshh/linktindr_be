@@ -17,9 +17,9 @@ namespace Linktindr_be
 
         // GET: api/<MedewerkerController>
         [HttpGet]
-        public IEnumerable<Medewerker> Get()
+        public List<Medewerker> Get()
         {
-            return OU.medewerker;
+            return this.OU.medewerker.ToList();
         }
 
         //GET (maak nieuwe medewerker aan) api/<MedewerkerController>/[Medewerker_NoId]
