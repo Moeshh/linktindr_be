@@ -17,14 +17,23 @@ namespace Linktindr_be
 
         // GET: api/<MedewerkerController>
         [HttpGet]
-        public IEnumerable<Medewerker> Get()
+        public List<Medewerker> Get()
         {
-            return OU.medewerker;
+            return this.OU.medewerker.ToList();
         }
 
-        //GET (maak nieuwe medewerker aan) api/<MedewerkerController>/[Medewerker_NoId]
+        // GET (specific) api/<MedewerkerController>/{id}
+        [HttpGet("{id}")]
+        public Medewerker Get(int id)
+        {
+            Medewerker m = OU.medewerker.Find(id);
+
+            return m;
+        }
+
+        //GET (maak nieuwe medewerker aan) api/<MedewerkerController>/add
         [HttpPost("add")]
-        public string Aanmaken(Medewerker_NoId mni) { 
+        public string Add(Medewerker_NoId mni) { 
             
             Medewerker m = new Medewerker();
             m.TalentManager_Id = mni.TalentManager_Id;
@@ -41,34 +50,57 @@ namespace Linktindr_be
             m.Uitstroomrichting = mni.Uitstroomrichting;
             m.Photo = mni.Photo;
             m.ProfileText = mni.ProfileText;
+
             OU.Add(m);
             OU.SaveChanges();
             return "gelukt";
             }
+        
+        // PUT api/<MedewerkerController>/update
+        [HttpPut("update")]
+        public string Put(Medewerker m)
+        {
+            Medewerker mou = OU.medewerker.Find(m.Id);
+            if (mou == null)
+            {
+                return "gefaald";
+            }
 
-        //// GET api/<MedewerkerController>/5
-        //[HttpGet("{id}")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
-        //
-        //// POST api/<MedewerkerController>
-        //[HttpPost]
-        //public void Post([FromBody] string value)
-        //{
-        //}
-        //
-        //// PUT api/<MedewerkerController>/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
-        //
-        //// DELETE api/<MedewerkerController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+            mou.TalentManager_Id = m.TalentManager_Id;
+            mou.FirstName = m.FirstName;
+            mou.LastName = m.LastName;
+            mou.PostCode = m.PostCode;
+            mou.HouseNumber = m.HouseNumber;
+            mou.DateOfBirth = m.DateOfBirth;
+            mou.PostCode = m.PostCode;
+            mou.HouseNumber = m.HouseNumber;
+            mou.Email = m.Email;
+            mou.Telephone = m.Telephone;
+            mou.Radius = m.Radius;
+            mou.Uitstroomrichting = m.Uitstroomrichting;
+            mou.Photo = m.Photo;
+            mou.ProfileText = m.ProfileText;
+
+            OU.medewerker.Update(mou);
+            OU.SaveChanges();
+
+            return "gelukt";
+        }
+        
+        // DELETE api/<MedewerkerController>/delete
+        [HttpDelete("delete")]
+        public string Delete(int id)
+        {
+            Medewerker m = OU.medewerker.Find(id);
+            if (m == null)
+            {
+                return "gefaald";
+            }
+
+            OU.medewerker.Remove(m);
+            OU.SaveChanges();
+
+            return "gelukt";
+        }
     }
 }

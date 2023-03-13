@@ -22,8 +22,18 @@ namespace Linktindr_be
             return OU.vacature;
         }
 
+        // GET (specific) api/<VacatureController>/{id}
+        [HttpGet("{id}")]
+        public Vacature Get(int id)
+        {
+            Vacature v = OU.vacature.Find(id);
+
+            return v;
+        }
+
+        // ADD api/<VacatureController>/add
         [HttpPost("add")]
-        public string Aanmaken(Vacature_NoId vni)
+        public string Add(Vacature_NoId vni)
         {
             Vacature v = new Vacature();
             v.Opdrachtgever_id = vni.Opdrachtgever_id;
@@ -39,29 +49,44 @@ namespace Linktindr_be
             return "gelukt";
         }
 
-        //// GET api/<VacatureController>/5
-        //[HttpGet("{id}")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
-        //
-        //// POST api/<VacatureController>
-        //[HttpPost]
-        //public void Post([FromBody] string value)
-        //{
-        //}
-        //
-        //// PUT api/<VacatureController>/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
-        //
-        //// DELETE api/<VacatureController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+        // PUT api/<VacatureController>/update
+        [HttpPut("update")]
+        public string Put(Vacature v)
+        {
+            Vacature vou = OU.vacature.Find(v.Id);
+            if (vou == null)
+            {
+                return "gefaald";
+            }
+
+            vou.Opdrachtgever_id = v.Opdrachtgever_id;
+            vou.Title = v.Title;
+            vou.Description = v.Description;
+            vou.Uitstroomrichting = v.Uitstroomrichting;
+            vou.Location = v.Location;
+            vou.Startdate = v.Startdate;
+            vou.Einddate = v.Einddate;
+
+            OU.vacature.Update(vou);
+            OU.SaveChanges();
+
+            return "gelukt";
+        }
+
+        // DELETE api/<VacatureController>/delete
+        [HttpDelete("delete")]
+        public string Delete(int id)
+        {
+            Vacature v = OU.vacature.Find(id);
+            if (v == null)
+            {
+                return "gefaald";
+            }
+
+            OU.vacature.Remove(v);
+            OU.SaveChanges();
+
+            return "gelukt";
+        }
     }
 }
