@@ -18,7 +18,7 @@ namespace dbcontext
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySQL("server=yc2302sql.mysql.database.azure.com; port=3306; database=yc2302; user=yc2302; password=Water123");
+            optionsBuilder.UseMySQL("server=yc2302sql.mysql.database.azure.com; database=yc2302; user=yc2302; password=Water123");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
