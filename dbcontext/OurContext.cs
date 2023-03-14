@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using dbcontext.Classes;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,8 @@ namespace dbcontext
         public DbSet<Vacature> vacature { get; set; }
         public DbSet<TalentManager> talentmanager { get; set; }
         public DbSet<Sollicitatie> sollicitatie { get; set; }
+        public DbSet<Plaatsing> plaatsing { get; set; }
+        public DbSet<Opdrachtgever> opdrachtgever { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
