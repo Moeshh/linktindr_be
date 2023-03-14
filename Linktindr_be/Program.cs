@@ -16,6 +16,13 @@ builder.Services.AddDbContext<OurContext>(
 
 var app = builder.Build();
 
+// Prevent front-end from getting CORS-errors by allowing requests from anywhere
+app.UseCors(policy => policy
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+    .SetIsOriginAllowed(origin => true)
+    .AllowCredentials());
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment()) {
     app.UseSwagger();
