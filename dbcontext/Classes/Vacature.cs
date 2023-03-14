@@ -1,5 +1,7 @@
-﻿namespace dbcontext {
-    public class Vacature {
+﻿namespace dbcontext.Classes
+{
+    public class Vacature
+    {
         public int Id { get; set; }
         public int Opdrachtgever_id { get; set; }
         public string Title { get; set; }

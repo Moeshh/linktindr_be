@@ -1,9 +1,10 @@
 ﻿using dbcontext;
+using dbcontext.Classes;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace Linktindr_be
+namespace Linktindr_be.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -12,7 +13,7 @@ namespace Linktindr_be
         OurContext OU;
         public MedewerkerController(OurContext oU)
         {
-            this.OU = oU;
+            OU = oU;
         }
 
         // GET: api/<MedewerkerController>
@@ -33,8 +34,9 @@ namespace Linktindr_be
 
         //GET (maak nieuwe medewerker aan) api/<MedewerkerController>/add
         [HttpPost("add")]
-        public string Add(Medewerker_NoId mni) { 
-            
+        public string Add(Medewerker_NoId mni)
+        {
+
             Medewerker m = new Medewerker();
             m.TalentManager_Id = mni.TalentManager_Id;
             m.FirstName = mni.FirstName;
@@ -54,8 +56,8 @@ namespace Linktindr_be
             OU.Add(m);
             OU.SaveChanges();
             return "gelukt";
-            }
-        
+        }
+
         // PUT api/<MedewerkerController>/update
         [HttpPut("update")]
         public string Put(Medewerker m)
@@ -86,7 +88,7 @@ namespace Linktindr_be
 
             return "gelukt";
         }
-        
+
         // DELETE api/<MedewerkerController>/delete
         [HttpDelete("delete")]
         public string Delete(int id)
