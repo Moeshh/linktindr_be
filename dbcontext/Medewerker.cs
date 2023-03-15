@@ -38,7 +38,7 @@ namespace dbcontext {
     }
     public class Medewerker_NoId
     {
-        public virtual TalentManager TalentManager { get; set; }
+        public int TalentManagerId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }

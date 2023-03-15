@@ -10,8 +10,8 @@
     }
     public class Sollicitatie_NoId
     {
-        //public int Medewerker_Id { get; set; }
-        //public int Vacature_Id { get; set; }
+        public int Medewerker_Id { get; set; }
+        public int Vacature_Id { get; set; }
         public string Status { get; set; }
         public bool Medewerker_akkoord { get; set; }
         public bool Opdrachtgever_akkoord { get; set; }
