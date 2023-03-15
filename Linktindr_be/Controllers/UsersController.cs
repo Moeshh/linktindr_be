@@ -40,11 +40,10 @@ namespace Linktindr_be.Controllers {
         }
 
         [HttpPost("check")]
-        public string Check([FromBody] Users_noid uni) {
+        public string Check([FromBody] Users_barebone uni) {
             Users u = new Users();
             u.email = uni.email;
             u.password = uni.password;
-            u.usertype = uni.usertype;
             //OU.Add(u);
             //OU.SaveChanges();
             return "gelukt. Email is: "+u.email+" en password is: "+u.password;

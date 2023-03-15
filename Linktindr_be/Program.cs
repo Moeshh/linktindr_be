@@ -17,6 +17,11 @@ builder.Services.AddDbContext<OurContext>(
 
 
 var app = builder.Build();
+app.UseCors(policy => policy
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+    .SetIsOriginAllowed(origin => true)
+    .AllowCredentials());
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment()) {
