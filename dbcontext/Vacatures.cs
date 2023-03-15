@@ -18,5 +18,6 @@
         public string Location { get; set; }
         public DateTime Startdate { get; set; }
         public DateTime Enddate { get; set; }
+        public virtual Opdrachtgever Opdrachtgever { get; set; }
     }
 }
