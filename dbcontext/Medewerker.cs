@@ -23,7 +23,6 @@ namespace dbcontext {
     }
     public class Medewerker {
         public int Id { get; set; }
-        public virtual TalentManager TalentManager { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }
@@ -35,10 +34,10 @@ namespace dbcontext {
         public Specialization Uitstroomrichting { get; set; } = Specialization.DevOps;
         public string Photo { get; set; }
         public string ProfileText { get; set; }
+        public virtual TalentManager TalentManager { get; set; }
     }
     public class Medewerker_NoId
     {
-        public int TalentManagerId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }
@@ -50,5 +49,6 @@ namespace dbcontext {
         public Specialization Uitstroomrichting { get; set; }
         public string Photo { get; set; }
         public string ProfileText { get; set; }
+        public int TalentManagerId { get; set; }
     }
 }

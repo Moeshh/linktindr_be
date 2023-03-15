@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using dbcontext;
 
@@ -10,9 +11,11 @@ using dbcontext;
 namespace dbcontext.Migrations
 {
     [DbContext(typeof(OurContext))]
-    partial class OurContextModelSnapshot : ModelSnapshot
+    [Migration("20230315093507_test01")]
+    partial class test01
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -210,7 +213,7 @@ namespace dbcontext.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("VARCHAR(255)");
 
-                    b.Property<int>("OpdrachtgeverId")
+                    b.Property<int?>("OpdrachtgeverId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Startdate")
@@ -275,13 +278,9 @@ namespace dbcontext.Migrations
 
             modelBuilder.Entity("dbcontext.Vacatures", b =>
                 {
-                    b.HasOne("dbcontext.Opdrachtgever", "Opdrachtgever")
+                    b.HasOne("dbcontext.Opdrachtgever", null)
                         .WithMany("Vacatures")
-                        .HasForeignKey("OpdrachtgeverId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Opdrachtgever");
+                        .HasForeignKey("OpdrachtgeverId");
                 });
 
             modelBuilder.Entity("dbcontext.Opdrachtgever", b =>

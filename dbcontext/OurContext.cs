@@ -18,6 +18,7 @@ namespace dbcontext
         public DbSet<TalentManager> talentmanager { get; set; }
         public DbSet<Sollicitatie> sollicitatie { get; set; }
         public DbSet<Opdrachtgever> opdrachtgever { get; set; }
+        public DbSet<Plaatsing> plaatsing { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             //Talentmanager
             modelBuilder.Entity<TalentManager>()
@@ -167,7 +168,23 @@ namespace dbcontext
                 .IsRequired();
 
             //Sollicitatie
+            modelBuilder.Entity<Sollicitatie>()
+                .Property(e => e.Status)
+                .HasColumnType($"ENUM('{string.Join("', '", Enum.GetNames(typeof(StatusEnum)))}')")
+                .HasDefaultValue(StatusEnum.Match)
+                .IsRequired();
 
+            modelBuilder.Entity<Sollicitatie>()
+                .Property(e => e.Medewerker_akkoord)
+                .HasColumnType("tinyint(1)")
+                .HasDefaultValue(0)
+                .IsRequired();
+
+            modelBuilder.Entity<Sollicitatie>()
+                .Property(e => e.Opdrachtgever_akkoord)
+                .HasColumnType("tinyint(1)")
+                .HasDefaultValue(0)
+                .IsRequired();
 
             //Plaatsing
         }
