@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Linktindr_be.Controllers {
+namespace Linktindr_be.Controllers
+{
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase {

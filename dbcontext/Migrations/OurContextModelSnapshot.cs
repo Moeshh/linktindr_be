@@ -192,6 +192,28 @@ namespace dbcontext.Migrations
                     b.ToTable("talentmanager");
                 });
 
+            modelBuilder.Entity("dbcontext.Users", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("email")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("password")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("usertype")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("users");
+                });
+
             modelBuilder.Entity("dbcontext.Vacatures", b =>
                 {
                     b.Property<int>("Id")

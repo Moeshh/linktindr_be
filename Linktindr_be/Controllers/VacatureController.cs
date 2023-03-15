@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace Linktindr_be
+namespace Linktindr_be.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -12,7 +12,7 @@ namespace Linktindr_be
         OurContext OU;
         public VacatureController(OurContext oU)
         {
-            this.OU = oU;
+            OU = oU;
         }
 
         // GET: api/<VacatureController>

@@ -11,7 +11,7 @@ using dbcontext;
 namespace dbcontext.Migrations
 {
     [DbContext(typeof(OurContext))]
-    [Migration("20230315093507_test01")]
+    [Migration("20230315122958_test01")]
     partial class test01
     {
         /// <inheritdoc />
@@ -193,6 +193,28 @@ namespace dbcontext.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("talentmanager");
+                });
+
+            modelBuilder.Entity("dbcontext.Users", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("email")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("password")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("usertype")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("users");
                 });
 
             modelBuilder.Entity("dbcontext.Vacatures", b =>

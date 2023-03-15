@@ -1,5 +1,7 @@
-namespace Linktindr_be {
-    public class WeatherForecast {
+namespace Linktindr_be.Controllers
+{
+    public class WeatherForecast
+    {
         public DateTime Date { get; set; }
 
         public int TemperatureC { get; set; }

@@ -19,6 +19,7 @@ namespace dbcontext
         public DbSet<Sollicitatie> sollicitatie { get; set; }
         public DbSet<Opdrachtgever> opdrachtgever { get; set; }
         public DbSet<Plaatsing> plaatsing { get; set; }
+        public DbSet<Users> users { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             //Talentmanager
             modelBuilder.Entity<TalentManager>()
