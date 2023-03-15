@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using dbcontext;
 
@@ -10,9 +11,11 @@ using dbcontext;
 namespace dbcontext.Migrations
 {
     [DbContext(typeof(OurContext))]
-    partial class OurContextModelSnapshot : ModelSnapshot
+    [Migration("20230315083241_testest")]
+    partial class testest
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -109,55 +112,23 @@ namespace dbcontext.Migrations
                     b.ToTable("opdrachtgever");
                 });
 
-            modelBuilder.Entity("dbcontext.Plaatsing", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("SollicitatieId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SollicitatieId");
-
-                    b.ToTable("plaatsing");
-                });
-
             modelBuilder.Entity("dbcontext.Sollicitatie", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("MedewerkerId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("Medewerker_akkoord")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("tinyint(1)")
-                        .HasDefaultValue(false);
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<bool>("Opdrachtgever_akkoord")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("tinyint(1)")
-                        .HasDefaultValue(false);
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Status")
                         .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("ENUM('Match', 'Sollicitatie', 'Bedenktijd', 'Accept', 'Decline')")
-                        .HasDefaultValue("Match");
-
-                    b.Property<int>("VacatureId")
-                        .HasColumnType("int");
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("MedewerkerId");
-
-                    b.HasIndex("VacatureId");
 
                     b.ToTable("sollicitatie");
                 });
@@ -192,28 +163,6 @@ namespace dbcontext.Migrations
                     b.ToTable("talentmanager");
                 });
 
-            modelBuilder.Entity("dbcontext.Users", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("email")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("password")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<int>("usertype")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("users");
-                });
-
             modelBuilder.Entity("dbcontext.Vacatures", b =>
                 {
                     b.Property<int>("Id")
@@ -232,9 +181,6 @@ namespace dbcontext.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("VARCHAR(255)");
 
-                    b.Property<int>("OpdrachtgeverId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("Startdate")
                         .HasColumnType("Datetime(6)");
 
@@ -249,8 +195,6 @@ namespace dbcontext.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OpdrachtgeverId");
-
                     b.ToTable("vacatures");
                 });
 
@@ -263,52 +207,6 @@ namespace dbcontext.Migrations
                         .IsRequired();
 
                     b.Navigation("TalentManager");
-                });
-
-            modelBuilder.Entity("dbcontext.Plaatsing", b =>
-                {
-                    b.HasOne("dbcontext.Sollicitatie", "Sollicitatie")
-                        .WithMany()
-                        .HasForeignKey("SollicitatieId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Sollicitatie");
-                });
-
-            modelBuilder.Entity("dbcontext.Sollicitatie", b =>
-                {
-                    b.HasOne("dbcontext.Medewerker", "Medewerker")
-                        .WithMany()
-                        .HasForeignKey("MedewerkerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("dbcontext.Vacatures", "Vacature")
-                        .WithMany()
-                        .HasForeignKey("VacatureId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Medewerker");
-
-                    b.Navigation("Vacature");
-                });
-
-            modelBuilder.Entity("dbcontext.Vacatures", b =>
-                {
-                    b.HasOne("dbcontext.Opdrachtgever", "Opdrachtgever")
-                        .WithMany("Vacatures")
-                        .HasForeignKey("OpdrachtgeverId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Opdrachtgever");
-                });
-
-            modelBuilder.Entity("dbcontext.Opdrachtgever", b =>
-                {
-                    b.Navigation("Vacatures");
                 });
 
             modelBuilder.Entity("dbcontext.TalentManager", b =>

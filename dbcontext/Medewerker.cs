@@ -36,7 +36,8 @@ namespace dbcontext {
         public string ProfileText { get; set; }
         public virtual TalentManager TalentManager { get; set; }
     }
-    public class Medewerker_NoId {
+    public class Medewerker_NoId
+    {
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }
@@ -48,6 +49,6 @@ namespace dbcontext {
         public Specialization Uitstroomrichting { get; set; }
         public string Photo { get; set; }
         public string ProfileText { get; set; }
-        public virtual TalentManager TalentManager { get; set; }
+        public int TalentManagerId { get; set; }
     }
 }
