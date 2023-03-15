@@ -1,5 +1,6 @@
 ﻿using dbcontext;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -44,9 +45,12 @@ namespace Linktindr_be.Controllers {
             Users u = new Users();
             u.email = uni.email;
             u.password = uni.password;
+            var json = JsonConvert.SerializeObject("gelukt. Email is: " + u.email + " en password is: " + u.password, new JsonSerializerSettings {
+                StringEscapeHandling = StringEscapeHandling.EscapeNonAscii
+            });
             //OU.Add(u);
             //OU.SaveChanges();
-            return "gelukt. Email is: "+u.email+" en password is: "+u.password;
+            return json;
         }
 
         // PUT api/<UsersController>/5
