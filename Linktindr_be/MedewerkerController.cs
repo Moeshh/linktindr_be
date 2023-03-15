@@ -36,7 +36,7 @@ namespace Linktindr_be
         public string Add(Medewerker_NoId mni) { 
             
             Medewerker m = new Medewerker();
-            m.TalentManager_Id = mni.TalentManager_Id;
+            //m.TalentManager = mni.TalentManager;
             m.FirstName = mni.FirstName;
             m.LastName = mni.LastName;
             m.PostCode = mni.PostCode;
@@ -66,7 +66,7 @@ namespace Linktindr_be
                 return "gefaald";
             }
 
-            mou.TalentManager_Id = m.TalentManager_Id;
+            mou.TalentManager = m.TalentManager;
             mou.FirstName = m.FirstName;
             mou.LastName = m.LastName;
             mou.PostCode = m.PostCode;

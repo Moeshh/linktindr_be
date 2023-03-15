@@ -37,8 +37,8 @@ namespace Linktindr_be
         {
             Sollicitatie s = new Sollicitatie();
 
-            s.Medewerker_Id = sni.Medewerker_Id;
-            s.Vacature_Id = sni.Vacature_Id;
+            //s.Medewerker_Id = sni.Medewerker_Id;
+            //s.Vacature_Id = sni.Vacature_Id;
             s.Status = sni.Status;
             s.Medewerker_akkoord = sni.Medewerker_akkoord;
             s.Opdrachtgever_akkoord = sni.Opdrachtgever_akkoord;
@@ -58,8 +58,8 @@ namespace Linktindr_be
                 return "gefaald";
             }
 
-            sou.Medewerker_Id = s.Medewerker_Id;
-            sou.Vacature_Id = s.Vacature_Id;
+            //sou.Medewerker_Id = s.Medewerker_Id;
+            //sou.Vacature_Id = s.Vacature_Id;
             sou.Status = s.Status;
             sou.Medewerker_akkoord = s.Medewerker_akkoord;
             sou.Opdrachtgever_akkoord = s.Opdrachtgever_akkoord;
