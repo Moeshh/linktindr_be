@@ -18,16 +18,16 @@ namespace Linktindr_be.Controllers
 
         // GET: api/<VacatureController>
         [HttpGet]
-        public IEnumerable<Vacature> Get()
+        public IEnumerable<Vacatures> Get()
         {
-            return OU.vacature;
+            return OU.vacatures;
         }
 
         // GET (specific) api/<VacatureController>/{id}
         [HttpGet("{id}")]
-        public Vacature Get(int id)
+        public Vacatures Get(int id)
         {
-            Vacature v = OU.vacature.Find(id);
+            Vacatures v = OU.vacatures.Find(id);
 
             return v;
         }
@@ -36,14 +36,14 @@ namespace Linktindr_be.Controllers
         [HttpPost("add")]
         public string Add(Vacature_NoId vni)
         {
-            Vacature v = new Vacature();
-            v.Opdrachtgever_id = vni.Opdrachtgever_id;
+            Vacatures v = new Vacatures();
+            //v.Opdrachtgever_id = vni.Opdrachtgever_id;
             v.Title = vni.Title;
             v.Description = vni.Description;
             v.Uitstroomrichting = vni.Uitstroomrichting;
             v.Location = vni.Location;
             v.Startdate = vni.Startdate;
-            v.Einddate = vni.Einddate;
+            v.Enddate = vni.Enddate;
 
             OU.Add(v);
             OU.SaveChanges();
@@ -52,23 +52,23 @@ namespace Linktindr_be.Controllers
 
         // PUT api/<VacatureController>/update
         [HttpPut("update")]
-        public string Put(Vacature v)
+        public string Put(Vacatures v)
         {
-            Vacature vou = OU.vacature.Find(v.Id);
+            Vacatures vou = OU.vacatures.Find(v.Id);
             if (vou == null)
             {
                 return "gefaald";
             }
 
-            vou.Opdrachtgever_id = v.Opdrachtgever_id;
+            //vou.Opdrachtgever_id = v.Opdrachtgever_id;
             vou.Title = v.Title;
             vou.Description = v.Description;
             vou.Uitstroomrichting = v.Uitstroomrichting;
             vou.Location = v.Location;
             vou.Startdate = v.Startdate;
-            vou.Einddate = v.Einddate;
+            vou.Enddate = v.Enddate;
 
-            OU.vacature.Update(vou);
+            OU.vacatures.Update(vou);
             OU.SaveChanges();
 
             return "gelukt";
@@ -78,13 +78,13 @@ namespace Linktindr_be.Controllers
         [HttpDelete("delete")]
         public string Delete(int id)
         {
-            Vacature v = OU.vacature.Find(id);
+            Vacatures v = OU.vacatures.Find(id);
             if (v == null)
             {
                 return "gefaald";
             }
 
-            OU.vacature.Remove(v);
+            OU.vacatures.Remove(v);
             OU.SaveChanges();
 
             return "gelukt";

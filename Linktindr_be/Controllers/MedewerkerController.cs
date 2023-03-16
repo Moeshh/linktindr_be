@@ -20,7 +20,7 @@ namespace Linktindr_be.Controllers
         [HttpGet]
         public List<Medewerker> Get()
         {
-            return this.OU.medewerker.ToList();
+            return OU.medewerker.ToList();
         }
 
         // GET (specific) api/<MedewerkerController>/{id}
@@ -38,7 +38,7 @@ namespace Linktindr_be.Controllers
         {
 
             Medewerker m = new Medewerker();
-            m.TalentManager_Id = mni.TalentManager_Id;
+            //m.TalentManager = mni.TalentManager;
             m.FirstName = mni.FirstName;
             m.LastName = mni.LastName;
             m.PostCode = mni.PostCode;
@@ -68,7 +68,7 @@ namespace Linktindr_be.Controllers
                 return "gefaald";
             }
 
-            mou.TalentManager_Id = m.TalentManager_Id;
+            mou.TalentManager = m.TalentManager;
             mou.FirstName = m.FirstName;
             mou.LastName = m.LastName;
             mou.PostCode = m.PostCode;
