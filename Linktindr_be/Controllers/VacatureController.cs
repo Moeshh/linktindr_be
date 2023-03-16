@@ -34,7 +34,7 @@ namespace Linktindr_be.Controllers
 
         // ADD api/<VacatureController>/add
         [HttpPost("add")]
-        public string Add(Vacature_NoId vni)
+        public string Add(Vacatures_NoId vni)
         {
             Vacatures v = new Vacatures();
             //v.Opdrachtgever_id = vni.Opdrachtgever_id;

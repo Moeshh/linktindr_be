@@ -38,7 +38,7 @@ namespace Linktindr_be.Controllers
         {
 
             Medewerker m = new Medewerker();
-            //m.TalentManager = mni.TalentManager;
+            m.TalentManager = OU.talentmanager.Find(mni.TalentManagerId);
             m.FirstName = mni.FirstName;
             m.LastName = mni.LastName;
             m.PostCode = mni.PostCode;
