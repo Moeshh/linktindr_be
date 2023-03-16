@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
-using static dbcontext.Sollicitatie;
 
-namespace dbcontext {
+namespace dbcontext.Classes {
     public enum StatusEnum {
         Match,
         Sollicitatie,
@@ -10,7 +9,6 @@ namespace dbcontext {
         Decline
     }
     public class Sollicitatie {
-
         public int Id { get; set; }
         public StatusEnum Status { get; set; }
         public bool Medewerker_akkoord { get; set; }

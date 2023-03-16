@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace dbcontext {
+namespace dbcontext.Classes {
 
     public enum Specialization {
         [Description("DevOps")]

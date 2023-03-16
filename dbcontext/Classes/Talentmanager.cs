@@ -1,5 +1,7 @@
-﻿namespace dbcontext {
-    public class TalentManager {
+﻿namespace dbcontext.Classes
+{
+    public class TalentManager
+    {
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

@@ -1,4 +1,5 @@
-﻿namespace dbcontext {
+﻿namespace dbcontext.Classes
+{
     public class Vacatures {
         public int Id { get; set; }
         //public int Opdrachtgever_id { get; set; }
@@ -10,8 +11,7 @@
         public DateTime Enddate { get; set; }
         public virtual Opdrachtgever Opdrachtgever { get; set; }
     }
-    public class Vacature_NoId
-    {
+    public class Vacatures_NoId {
         public string Title { get; set; }
         public string Description { get; set; }
         public Specialization Uitstroomrichting { get; set; }
