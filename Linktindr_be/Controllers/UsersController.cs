@@ -9,21 +9,21 @@ namespace Linktindr_be.Controllers {
     [ApiController]
     public class UsersController : ControllerBase {
 
-        OurContext OU;
-        public UsersController(OurContext oU) {
-            OU = oU;
+        OurContext OC;
+        public UsersController(OurContext oC) {
+            OC = oC;
         }
 
         // GET: api/<UsersController>
         [HttpGet]
         public IEnumerable<Users> Get() {
-            return OU.users;
+            return OC.users;
         }
 
         // GET api/<UsersController>/5
         [HttpGet("{id}")]
         public Users Get(int id) {
-            Users u = OU.users.Find(id);
+            Users u = OC.users.Find(id);
 
             return u;
         }
@@ -45,7 +45,15 @@ namespace Linktindr_be.Controllers {
             Users u = new Users();
             u.email = uni.email;
             u.password = uni.password;
-            var json = JsonConvert.SerializeObject("gelukt. Email is: " + u.email + " en password is: " + u.password, new JsonSerializerSettings {
+            Users ocu = new Users();
+            ocu = OC.users.Find(1);
+            string returnmessage = "";
+            if(ocu.password == u.password) {
+                returnmessage = "password is juist";
+            } else {
+                returnmessage = "password is niet juist";
+            }
+            var json = JsonConvert.SerializeObject("gelukt. Email is: " + u.email + " en "+returnmessage, new JsonSerializerSettings {
                 StringEscapeHandling = StringEscapeHandling.EscapeNonAscii
             });
             //OU.Add(u);
