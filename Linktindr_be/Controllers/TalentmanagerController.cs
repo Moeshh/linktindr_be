@@ -27,9 +27,14 @@ namespace Linktindr_be.Controllers
 
         // GET (specific) api/<TalentmanagerController>/{id}
         [HttpGet("{id}")]
-        public TalentManager Get(int id)
+        public TalentManagerDTO Get(int id)
         {
-            TalentManager t = OU.talentmanager.Find(id);
+            if (OU.talentmanager.Find(id) == null)
+            {
+                return new TalentManagerDTO();
+            }
+
+            TalentManagerDTO t = new TalentManagerDTO(OU.talentmanager.Find(id));
 
             return t;
         }
@@ -45,12 +50,13 @@ namespace Linktindr_be.Controllers
             t.Telephone = tni.Telephone;
             OU.Add(t);
             OU.SaveChanges();
+
             return "gelukt";
         }
 
         // PUT api/<TalentmanagerController>/update
         [HttpPut("update")]
-        public string Put(TalentManager t)
+        public string Put(TalentManagerDTO t)
         {
             TalentManager tou = OU.talentmanager.Find(t.Id);
             if (tou == null)

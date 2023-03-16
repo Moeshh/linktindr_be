@@ -24,6 +24,10 @@
         public string Email { get; set; }
         public int Telephone { get; set; }
 
+        public TalentManagerDTO()
+        {
+
+        }
         public TalentManagerDTO(TalentManager t)
         {
             this.Id = t.Id;
