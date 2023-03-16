@@ -188,7 +188,23 @@ namespace dbcontext
                 .HasDefaultValue(0)
                 .IsRequired();
 
-            //Plaatsing
+            //Users
+            modelBuilder.Entity<Users>()
+                .Property(e => e.email)
+                .HasMaxLength(255)
+                .HasColumnType("VARCHAR(255)")
+                .IsRequired();
+            modelBuilder.Entity<Users>()
+                .Property(e => e.password)
+                .HasMaxLength(255)
+                .HasColumnType("VARCHAR(255)")
+                .IsRequired();
+            modelBuilder.Entity<Users>()
+                .Property(e => e.usertype)
+                .HasColumnType($"ENUM('{string.Join("', '", Enum.GetNames(typeof(UsertypeEnum)))}')")
+                .HasDefaultValue(UsertypeEnum.Medewerker)
+                .IsRequired();
+            //Plaatsing niet nodig?
         }
 
     }

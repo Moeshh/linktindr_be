@@ -47,15 +47,22 @@ namespace Linktindr_be.Controllers
             Users u = new Users();
             u.email = uni.email;
             u.password = uni.password;
-            Users ocu = new Users();
-            ocu = OC.users.Find(1);
+            Users dbu = new Users();
+            dbu = OC.users.FirstOrDefault(ocu => ocu.email == u.email);
             string returnmessage = "";
-            if(ocu.password == u.password) {
-                returnmessage = "password is juist";
+            if(dbu != null) {
+                returnmessage += "email is: " + dbu.email;
+                if(dbu.password == u.password) {
+                    u.usertype = dbu.usertype;
+                    returnmessage = " en password is juist en je bent een " + u.usertype;
+                } else {
+                    returnmessage = " en password is niet juist";
+                }
             } else {
-                returnmessage = "password is niet juist";
+                returnmessage += "email bestaat niet";
             }
-            var json = JsonConvert.SerializeObject("gelukt. Email is: " + u.email + " en "+returnmessage, new JsonSerializerSettings {
+            
+            var json = JsonConvert.SerializeObject(returnmessage, new JsonSerializerSettings {
                 StringEscapeHandling = StringEscapeHandling.EscapeNonAscii
             });
             //OU.Add(u);
