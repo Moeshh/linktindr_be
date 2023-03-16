@@ -51,4 +51,34 @@ namespace dbcontext.Classes {
         public string ProfileText { get; set; }
         public int TalentManagerId { get; set; }
     }
+    public class MedewerkerDTO
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public DateTime DateOfBirth { get; set; }
+        public string PostCode { get; set; }
+        public string HouseNumber { get; set; }
+        public string Email { get; set; }
+        public int Telephone { get; set; }
+        public int Radius { get; set; }
+        public Specialization Uitstroomrichting { get; set; } = Specialization.DevOps;
+        public string Photo { get; set; }
+        public string ProfileText { get; set; }
+        public TalentManagerDTO TalentManager { get; set; }
+
+        public MedewerkerDTO(Medewerker m)
+        {
+            this.FirstName = m.FirstName;
+            this.LastName = m.LastName;
+            this.DateOfBirth = m.DateOfBirth;
+            this.PostCode = m.PostCode;
+            this.HouseNumber = m.HouseNumber;
+            this.Email = m.Email;
+            this.Telephone = m.Telephone;
+            this.Radius = m.Radius;
+            this.Uitstroomrichting = m.Uitstroomrichting;
+            this.Photo = m.Photo;
+            this.ProfileText = m.ProfileText;
+        }
+    }
 }

@@ -1,6 +1,7 @@
 ﻿using dbcontext;
 using dbcontext.Classes;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -18,9 +19,11 @@ namespace Linktindr_be.Controllers
 
         // GET: api/<MedewerkerController>
         [HttpGet]
-        public List<Medewerker> Get()
+        public List<MedewerkerDTO> Get()
         {
-            return OU.medewerker.ToList();
+            return OU.medewerker.Include(m => m.TalentManager)
+                .Select(m => new MedewerkerDTO(m))
+                .ToList();
         }
 
         // GET (specific) api/<MedewerkerController>/{id}
