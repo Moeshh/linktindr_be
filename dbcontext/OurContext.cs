@@ -1,13 +1,5 @@
 using dbcontext.Classes;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace dbcontext
 {
@@ -46,6 +38,9 @@ namespace dbcontext
                 .HasMaxLength(10)
                 .HasColumnType("INT(10)")
                 .IsRequired();
+
+            modelBuilder.Entity<TalentManager>()
+                .HasMany(t => t.Medewerkers);
 
             //Medewerker
             modelBuilder.Entity<Medewerker>()
@@ -116,6 +111,9 @@ namespace dbcontext
             modelBuilder.Entity<Medewerker>()
                 .Property(e => e.ProfileText)
                 .HasColumnType("TEXT");
+
+            modelBuilder.Entity<Medewerker>()
+                .HasOne(m => m.TalentManager);
 
             //Vacature
             modelBuilder.Entity<Vacatures>()

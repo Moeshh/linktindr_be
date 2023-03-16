@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace dbcontext.Classes {
 
@@ -34,6 +35,10 @@ namespace dbcontext.Classes {
         public Specialization Uitstroomrichting { get; set; } = Specialization.DevOps;
         public string Photo { get; set; }
         public string ProfileText { get; set; }
+        /*      
+                public int TalentManagerId { get; set; }
+                [ForeignKey("TalentManagerId")]
+        */
         public virtual TalentManager TalentManager { get; set; }
     }
     public class Medewerker_NoId

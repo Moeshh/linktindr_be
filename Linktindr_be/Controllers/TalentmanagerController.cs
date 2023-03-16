@@ -1,5 +1,6 @@
 ﻿using dbcontext;
 using dbcontext.Classes;
+using Linktindr_be.Dto;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -48,7 +49,7 @@ namespace Linktindr_be.Controllers
 
         // PUT api/<TalentmanagerController>/update
         [HttpPut("update")]
-        public string Put(TalentManager t)
+        public string Put(SaveTalentmanagerDto t)
         {
             TalentManager tou = OU.talentmanager.Find(t.Id);
             if (tou == null)
