@@ -53,6 +53,7 @@ namespace dbcontext.Classes {
     }
     public class MedewerkerDTO
     {
+        public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }
@@ -64,10 +65,21 @@ namespace dbcontext.Classes {
         public Specialization Uitstroomrichting { get; set; } = Specialization.DevOps;
         public string Photo { get; set; }
         public string ProfileText { get; set; }
-        public TalentManagerDTO TalentManager { get; set; }
+        
+        //variabelen van de bijbehorende talentmanager
+        public int TalentManagerId { get; set; }
+        public string TalentManagerFirstName { get; set; }
+        public string TalentManagerLastName { get; set; }
+        public string TalentManagerEmail { get; set; }
+        public int TalentManagerTelephone { get; set; }
 
+        public MedewerkerDTO()
+        {
+
+        }
         public MedewerkerDTO(Medewerker m)
         {
+            this.Id = m.Id;
             this.FirstName = m.FirstName;
             this.LastName = m.LastName;
             this.DateOfBirth = m.DateOfBirth;
@@ -79,6 +91,29 @@ namespace dbcontext.Classes {
             this.Uitstroomrichting = m.Uitstroomrichting;
             this.Photo = m.Photo;
             this.ProfileText = m.ProfileText;
+
+            this.TalentManagerId = m.TalentManager.Id;
+            this.TalentManagerFirstName = m.TalentManager.FirstName;
+            this.TalentManagerLastName = m.TalentManager.LastName;
+            this.TalentManagerEmail = m.TalentManager.Email;
+            this.TalentManagerTelephone = m.TalentManager.Telephone;
         }
+    }
+
+    public class MedewerkerInputDTO
+    {
+        public int Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public DateTime DateOfBirth { get; set; }
+        public string PostCode { get; set; }
+        public string HouseNumber { get; set; }
+        public string Email { get; set; }
+        public int Telephone { get; set; }
+        public int Radius { get; set; }
+        public Specialization Uitstroomrichting { get; set; } = Specialization.DevOps;
+        public string Photo { get; set; }
+        public string ProfileText { get; set; }
+        public int TalentManagerId { get; set; }
     }
 }

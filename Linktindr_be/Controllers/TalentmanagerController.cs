@@ -31,7 +31,11 @@ namespace Linktindr_be.Controllers
         {
             if (OU.talentmanager.Find(id) == null)
             {
-                return new TalentManagerDTO();
+                TalentManagerDTO tdto = new TalentManagerDTO();
+                tdto.Id = -1;
+                tdto.FirstName = "Invalid";
+                tdto.LastName = "ID";
+                return tdto;
             }
 
             TalentManagerDTO t = new TalentManagerDTO(OU.talentmanager.Find(id));
