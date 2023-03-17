@@ -1,6 +1,7 @@
 ﻿using dbcontext;
 using dbcontext.Classes;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -18,16 +19,28 @@ namespace Linktindr_be.Controllers
 
         // GET: api/<MedewerkerController>
         [HttpGet]
-        public List<Medewerker> Get()
+        public List<MedewerkerDTO> Get()
         {
-            return OU.medewerker.ToList();
+            return OU.medewerker.Include(m => m.TalentManager)
+                .Select(m => new MedewerkerDTO(m))
+                .ToList();
         }
 
         // GET (specific) api/<MedewerkerController>/{id}
         [HttpGet("{id}")]
-        public Medewerker Get(int id)
+        public MedewerkerDTO Get(int id)
         {
-            Medewerker m = OU.medewerker.Find(id);
+            if (OU.medewerker.Find(id) == null)
+            {
+                MedewerkerDTO mdto = new MedewerkerDTO();
+                mdto.Id = -1;
+                mdto.FirstName = "Invalid";
+                mdto.LastName = "ID";
+                return mdto;
+            }
+
+            MedewerkerDTO m = new MedewerkerDTO(OU.medewerker.Include(m => m.TalentManager)
+                .FirstOrDefault(m => m.Id == id));
 
             return m;
         }
@@ -36,9 +49,9 @@ namespace Linktindr_be.Controllers
         [HttpPost("add")]
         public string Add(Medewerker_NoId mni)
         {
-
             Medewerker m = new Medewerker();
-            //m.TalentManager = mni.TalentManager;
+
+            m.TalentManager = OU.talentmanager.Find(mni.TalentManagerId);
             m.FirstName = mni.FirstName;
             m.LastName = mni.LastName;
             m.PostCode = mni.PostCode;
@@ -60,7 +73,7 @@ namespace Linktindr_be.Controllers
 
         // PUT api/<MedewerkerController>/update
         [HttpPut("update")]
-        public string Put(Medewerker m)
+        public string Put(MedewerkerInputDTO m)
         {
             Medewerker mou = OU.medewerker.Find(m.Id);
             if (mou == null)
@@ -68,7 +81,9 @@ namespace Linktindr_be.Controllers
                 return "gefaald";
             }
 
-            mou.TalentManager = m.TalentManager;
+            TalentManager t = OU.talentmanager.Find(m.TalentManagerId);
+
+            mou.TalentManager = t;
             mou.FirstName = m.FirstName;
             mou.LastName = m.LastName;
             mou.PostCode = m.PostCode;

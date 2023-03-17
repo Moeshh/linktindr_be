@@ -1,6 +1,7 @@
 ﻿using dbcontext;
 using dbcontext.Classes;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -18,26 +19,38 @@ namespace Linktindr_be.Controllers
 
         // GET: api/<VacatureController>
         [HttpGet]
-        public IEnumerable<Vacatures> Get()
+        public IEnumerable<VacaturesDTO> Get()
         {
-            return OU.vacatures;
+            return OU.vacatures.Include(v => v.Opdrachtgever)
+                .Select(v => new VacaturesDTO(v))
+                .ToList();
         }
 
         // GET (specific) api/<VacatureController>/{id}
         [HttpGet("{id}")]
-        public Vacatures Get(int id)
+        public VacaturesDTO Get(int id)
         {
-            Vacatures v = OU.vacatures.Find(id);
+            if (OU.vacatures.Find(id) == null)
+            {
+                VacaturesDTO vdto = new VacaturesDTO();
+                vdto.Id = -1;
+                vdto.Title = "Invalid";
+                vdto.Description = "ID";
+                return vdto;
+            }
+
+            VacaturesDTO v = new VacaturesDTO(OU.vacatures.Include(v => v.Opdrachtgever)
+                .FirstOrDefault(v => v.Id == id));
 
             return v;
         }
 
         // ADD api/<VacatureController>/add
         [HttpPost("add")]
-        public string Add(Vacature_NoId vni)
+        public string Add(Vacatures_NoId vni)
         {
             Vacatures v = new Vacatures();
-            //v.Opdrachtgever_id = vni.Opdrachtgever_id;
+            v.Opdrachtgever = OU.opdrachtgever.Find(vni.OpdrachtgeverId);
             v.Title = vni.Title;
             v.Description = vni.Description;
             v.Uitstroomrichting = vni.Uitstroomrichting;
@@ -52,7 +65,7 @@ namespace Linktindr_be.Controllers
 
         // PUT api/<VacatureController>/update
         [HttpPut("update")]
-        public string Put(Vacatures v)
+        public string Put(VacaturesInputDTO v)
         {
             Vacatures vou = OU.vacatures.Find(v.Id);
             if (vou == null)
@@ -60,7 +73,7 @@ namespace Linktindr_be.Controllers
                 return "gefaald";
             }
 
-            //vou.Opdrachtgever_id = v.Opdrachtgever_id;
+            vou.Opdrachtgever = OU.opdrachtgever.Find(v.OpdrachtgeverId);
             vou.Title = v.Title;
             vou.Description = v.Description;
             vou.Uitstroomrichting = v.Uitstroomrichting;

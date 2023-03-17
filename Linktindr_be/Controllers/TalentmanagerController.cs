@@ -1,6 +1,7 @@
 ﻿using dbcontext;
 using dbcontext.Classes;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -18,16 +19,26 @@ namespace Linktindr_be.Controllers
 
         // GET: api/<ValuesController>
         [HttpGet]
-        public IEnumerable<TalentManager> Get()
+        public IEnumerable<TalentManagerDTO> Get()
         {
-            return OU.talentmanager;
+            return OU.talentmanager.Select(t => new TalentManagerDTO(t))
+                .ToList();
         }
 
         // GET (specific) api/<TalentmanagerController>/{id}
         [HttpGet("{id}")]
-        public TalentManager Get(int id)
+        public TalentManagerDTO Get(int id)
         {
-            TalentManager t = OU.talentmanager.Find(id);
+            if (OU.talentmanager.Find(id) == null)
+            {
+                TalentManagerDTO tdto = new TalentManagerDTO();
+                tdto.Id = -1;
+                tdto.FirstName = "Invalid";
+                tdto.LastName = "ID";
+                return tdto;
+            }
+
+            TalentManagerDTO t = new TalentManagerDTO(OU.talentmanager.Find(id));
 
             return t;
         }
@@ -43,12 +54,13 @@ namespace Linktindr_be.Controllers
             t.Telephone = tni.Telephone;
             OU.Add(t);
             OU.SaveChanges();
+
             return "gelukt";
         }
 
         // PUT api/<TalentmanagerController>/update
         [HttpPut("update")]
-        public string Put(TalentManager t)
+        public string Put(TalentManagerDTO t)
         {
             TalentManager tou = OU.talentmanager.Find(t.Id);
             if (tou == null)
