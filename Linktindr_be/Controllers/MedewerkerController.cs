@@ -49,8 +49,8 @@ namespace Linktindr_be.Controllers
         [HttpPost("add")]
         public string Add(Medewerker_NoId mni)
         {
-
             Medewerker m = new Medewerker();
+
             m.TalentManager = OU.talentmanager.Find(mni.TalentManagerId);
             m.FirstName = mni.FirstName;
             m.LastName = mni.LastName;

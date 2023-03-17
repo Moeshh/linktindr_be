@@ -73,10 +73,8 @@ namespace dbcontext.Classes {
         public string TalentManagerEmail { get; set; }
         public int TalentManagerTelephone { get; set; }
 
-        public MedewerkerDTO()
-        {
+        public MedewerkerDTO() { }
 
-        }
         public MedewerkerDTO(Medewerker m)
         {
             this.Id = m.Id;
