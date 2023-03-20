@@ -35,6 +35,25 @@ namespace dbcontext.Classes {
         public string Photo { get; set; }
         public string ProfileText { get; set; }
         public virtual TalentManager TalentManager { get; set; }
+
+        public static Medewerker FromCsv(string csvLine) {
+            string[] values = csvLine.Split(';');
+            Medewerker midto = new Medewerker();
+            midto.FirstName = Convert.ToString(values[0]);
+            midto.LastName = Convert.ToString(values[1]);
+            midto.DateOfBirth = Convert.ToDateTime(values[2]);
+            midto.PostCode = Convert.ToString(values[3]);
+            midto.HouseNumber = Convert.ToString(values[4]);
+            midto.Email = Convert.ToString(values[5]);
+            midto.Telephone = Convert.ToInt32(values[6]);
+            midto.Radius = Convert.ToInt32(values[7]);
+            Enum.TryParse(Convert.ToString(values[8]), out Specialization midtoUitstroomrichting);
+            midto.Uitstroomrichting = midtoUitstroomrichting;
+            midto.Photo = Convert.ToString(values[9]);
+            midto.ProfileText = Convert.ToString(values[10]);
+            //midto.TalentManagerId = Convert.ToInt32(values[11]);
+            return midto;
+        }
     }
     public class Medewerker_NoId
     {
@@ -98,8 +117,7 @@ namespace dbcontext.Classes {
         }
     }
 
-    public class MedewerkerInputDTO
-    {
+    public class MedewerkerInputDTO {
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -113,5 +131,7 @@ namespace dbcontext.Classes {
         public string Photo { get; set; }
         public string ProfileText { get; set; }
         public int TalentManagerId { get; set; }
+
+        
     }
 }
