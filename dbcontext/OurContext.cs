@@ -14,13 +14,13 @@ namespace dbcontext
     public class OurContext : DbContext
     {
         public OurContext(DbContextOptions options) : base(options) { }
-        public DbSet<Medewerker> medewerker { get; set; }
-        public DbSet<Vacatures> vacatures { get; set; }
-        public DbSet<TalentManager> talentmanager { get; set; }
-        public DbSet<Sollicitatie> sollicitatie { get; set; }
-        public DbSet<Opdrachtgever> opdrachtgever { get; set; }
-        public DbSet<Plaatsing> plaatsing { get; set; }
-        public DbSet<Users> users { get; set; }
+        public DbSet<Medewerker> Medewerker { get; set; }
+        public DbSet<Vacatures> Vacatures { get; set; }
+        public DbSet<TalentManager> Talentmanager { get; set; }
+        public DbSet<Sollicitatie> Sollicitatie { get; set; }
+        public DbSet<Opdrachtgever> Opdrachtgever { get; set; }
+        public DbSet<Plaatsing> Plaatsing { get; set; }
+        public DbSet<Users> Users { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             //Talentmanager
             modelBuilder.Entity<TalentManager>()
@@ -189,6 +189,23 @@ namespace dbcontext
                 .IsRequired();
 
             //Plaatsing
+
+            //Users
+            modelBuilder.Entity<Users>()
+                .Property(e => e.email)
+                .HasMaxLength(255)
+                .HasColumnType("VARCHAR(255)")
+                .IsRequired();
+            modelBuilder.Entity<Users>()
+                .Property(e => e.password)
+                .HasMaxLength(255)
+                .HasColumnType("VARCHAR(255)")
+                .IsRequired();
+            modelBuilder.Entity<Users>()
+                .Property(e => e.usertype)
+                .HasConversion<string>()
+                .HasColumnType($"ENUM('{allowedValues}')")
+                .IsRequired();
         }
 
     }
