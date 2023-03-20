@@ -5,8 +5,7 @@ using Newtonsoft.Json;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace Linktindr_be.Controllers
-{
+namespace Linktindr_be.Controllers {
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase {
@@ -19,13 +18,13 @@ namespace Linktindr_be.Controllers
         // GET: api/<UsersController>
         [HttpGet]
         public IEnumerable<Users> Get() {
-            return OC.users;
+            return OC.Users;
         }
 
         // GET api/<UsersController>/5
         [HttpGet("{id}")]
         public Users Get(int id) {
-            Users u = OC.users.Find(id);
+            Users u = OC.Users.Find(id);
 
             return u;
         }
@@ -48,18 +47,24 @@ namespace Linktindr_be.Controllers
             u.email = uni.email;
             u.password = uni.password;
             Users ocu = new Users();
-            ocu = OC.users.Find(1);
+            ocu = OC.Users.Single(s => s.email == uni.email);
+
             string returnmessage = "";
             if(ocu.password == u.password) {
                 returnmessage = "password is juist";
             } else {
                 returnmessage = "password is niet juist";
             }
-            var json = JsonConvert.SerializeObject("gelukt. Email is: " + u.email + " en "+returnmessage, new JsonSerializerSettings {
+
+            var data = new {
+                Id = ocu.Id,
+                Email = ocu.email,
+                Usertype = ocu.usertype.ToString(),
+                Message = returnmessage
+            };
+            var json = JsonConvert.SerializeObject(data, new JsonSerializerSettings {
                 StringEscapeHandling = StringEscapeHandling.EscapeNonAscii
             });
-            //OU.Add(u);
-            //OU.SaveChanges();
             return json;
         }
 
