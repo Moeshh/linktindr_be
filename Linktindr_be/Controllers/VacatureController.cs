@@ -24,7 +24,7 @@ namespace Linktindr_be.Controllers {
 
         // GET (specific) api/<VacatureController>/{id}
         [HttpGet("{id}")]
-        public VacaturesDTO Get(int id) {
+        public VacaturesDTO? Get(int id) {
             if(OC.Vacatures.Find(id) == null) {
                 VacaturesDTO vdto = new VacaturesDTO();
                 vdto.Id = -1;
@@ -33,17 +33,22 @@ namespace Linktindr_be.Controllers {
                 return vdto;
             }
 
-            VacaturesDTO v = new VacaturesDTO(OC.Vacatures.Include(v => v.Opdrachtgever)
-                .FirstOrDefault(v => v.Id == id));
+            Vacatures? v = OC.Vacatures.Include(v => v.Opdrachtgever).FirstOrDefault(v => v.Id == id);
+            if (v == null)
+                return null;
 
-            return v;
+            return new VacaturesDTO(v);
         }
 
         // ADD api/<VacatureController>/add
         [HttpPost("add")]
         public string Add(Vacatures_NoId vni) {
+            Opdrachtgever? o = OC.Opdrachtgever.Find(vni.OpdrachtgeverId);
+            if (o == null)
+                return "failed";
+
             Vacatures v = new Vacatures();
-            v.Opdrachtgever = OC.Opdrachtgever.Find(vni.OpdrachtgeverId);
+            v.Opdrachtgever = o;
             v.Title = vni.Title;
             v.Description = vni.Description;
             v.Uitstroomrichting = vni.Uitstroomrichting;
@@ -59,12 +64,18 @@ namespace Linktindr_be.Controllers {
         // PUT api/<VacatureController>/update
         [HttpPut("update")]
         public string Put(VacaturesInputDTO v) {
-            Vacatures voc = OC.Vacatures.Find(v.Id);
+            Vacatures? voc = OC.Vacatures.Find(v.Id);
             if(voc == null) {
                 return "gefaald";
             }
 
-            voc.Opdrachtgever = OC.Opdrachtgever.Find(v.OpdrachtgeverId);
+            Opdrachtgever? o = OC.Opdrachtgever.Find(v.OpdrachtgeverId);
+            if (o == null)
+            {
+                return "gefaald";
+            }
+
+            voc.Opdrachtgever = o;
             voc.Title = v.Title;
             voc.Description = v.Description;
             voc.Uitstroomrichting = v.Uitstroomrichting;
@@ -81,7 +92,7 @@ namespace Linktindr_be.Controllers {
         // DELETE api/<VacatureController>/delete
         [HttpDelete("delete")]
         public string Delete(int id) {
-            Vacatures v = OC.Vacatures.Find(id);
+            Vacatures? v = OC.Vacatures.Find(id);
             if(v == null) {
                 return "gefaald";
             }

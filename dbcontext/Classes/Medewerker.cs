@@ -127,7 +127,7 @@ namespace dbcontext.Classes {
         public string Email { get; set; }
         public int Telephone { get; set; }
         public int Radius { get; set; }
-        public Specialization Uitstroomrichting { get; set; } = Specialization.DevOps;
+        public string Uitstroomrichting { get; set; }
         public string Photo { get; set; }
         public string ProfileText { get; set; }
         public int TalentManagerId { get; set; }

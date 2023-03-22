@@ -13,9 +13,11 @@ namespace Linktindr_be.Controllers {
     [ApiController]
     public class UsersController : ControllerBase {
 
-        OurContext OC;
-        public UsersController(OurContext oC) {
-            OC = oC;
+        // Maak alle properties private
+        private OurContext OC;
+
+        public UsersController(OurContext OC) {
+            this.OC = OC;
         }
 
         // GET: api/<UsersController>
@@ -26,13 +28,10 @@ namespace Linktindr_be.Controllers {
 
         // GET api/<UsersController>/5
         [HttpGet("{id}")]
-        public UsersDTO Get(int id) {
-            Users u = OC.Users.Find(id);
-            if(u == null) {
-                return null;
-            }
+        public UsersDTO? Get(int id) {
+            Users? u = OC.Users.Find(id);
 
-            return new UsersDTO(u);
+            return u == null ? null : new UsersDTO(u);
         }
 
         // POST api/<UsersController>
@@ -79,7 +78,31 @@ namespace Linktindr_be.Controllers {
         }
 
         [HttpPost("add_user_talentmanager")]
-        public string Check([FromBody] CreateNewUserDTO utm) {
+        public bool Check([FromBody] CreateNewUserDTO utm) {
+            Users NewUser = new Users();
+            NewUser.Email = utm.Email;
+            NewUser.Password = utm.Password;
+            NewUser.Usertype = Enum.Parse<UsertypeEnum>(utm.Usertype);
+
+            switch (utm.Usertype)
+            {
+                case "O":
+                    Opdrachtgever Opdrachtgever = new Opdrachtgever();
+                    Opdrachtgever.Name = utm.FirstName + " " + utm.LastName;
+
+
+                    OC.Users.Add(NewUser);
+                    OC.SaveChanges();
+
+                    break;
+
+                case "M":
+                    break;
+
+                case "T":
+                    break;
+            }
+
             Users u = new Users();
             TalentManager t = new TalentManager();
 
