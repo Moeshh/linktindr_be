@@ -6,13 +6,13 @@ namespace dbcontext
     public class OurContext : DbContext
     {
         public OurContext(DbContextOptions options) : base(options) { }
-        public DbSet<Medewerker> medewerker { get; set; }
-        public DbSet<Vacatures> vacatures { get; set; }
-        public DbSet<TalentManager> talentmanager { get; set; }
-        public DbSet<Sollicitatie> sollicitatie { get; set; }
-        public DbSet<Opdrachtgever> opdrachtgever { get; set; }
-        public DbSet<Plaatsing> plaatsing { get; set; }
-        public DbSet<Users> users { get; set; }
+        public DbSet<Medewerker> Medewerker { get; set; }
+        public DbSet<Vacatures> Vacatures { get; set; }
+        public DbSet<TalentManager> Talentmanager { get; set; }
+        public DbSet<Sollicitatie> Sollicitatie { get; set; }
+        public DbSet<Opdrachtgever> Opdrachtgever { get; set; }
+        public DbSet<Plaatsing> Plaatsing { get; set; }
+        public DbSet<Users> Users { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             //Talentmanager
             modelBuilder.Entity<TalentManager>()
@@ -186,23 +186,42 @@ namespace dbcontext
                 .HasDefaultValue(0)
                 .IsRequired();
 
+<<<<<<< HEAD
             //Users
             modelBuilder.Entity<Users>()
                 .Property(e => e.email)
+=======
+            //Plaatsing
+
+            //Users
+            modelBuilder.Entity<Users>()
+                .Property(e => e.Email)
+>>>>>>> Mustafa2
                 .HasMaxLength(255)
                 .HasColumnType("VARCHAR(255)")
                 .IsRequired();
             modelBuilder.Entity<Users>()
+<<<<<<< HEAD
                 .Property(e => e.password)
+=======
+                .Property(e => e.Password)
+>>>>>>> Mustafa2
                 .HasMaxLength(255)
                 .HasColumnType("VARCHAR(255)")
                 .IsRequired();
             modelBuilder.Entity<Users>()
+<<<<<<< HEAD
                 .Property(e => e.usertype)
                 .HasColumnType($"ENUM('{string.Join("', '", Enum.GetNames(typeof(UsertypeEnum)))}')")
                 .HasDefaultValue(UsertypeEnum.Medewerker)
                 .IsRequired();
             //Plaatsing niet nodig?
+=======
+                .Property(e => e.Usertype)
+                .HasConversion<string>()
+                .HasColumnType($"ENUM('{allowedValues}')")
+                .IsRequired();
+>>>>>>> Mustafa2
         }
 
     }
