@@ -49,7 +49,7 @@ namespace dbcontext
             modelBuilder.Entity<Medewerker>()
                 .Property(e => e.Telephone)
                 .HasMaxLength(10)
-                .HasColumnType("INT(10)")
+                .HasColumnType("VARCHAR(20)")
                 .IsRequired();
 
             modelBuilder.Entity<Medewerker>()
@@ -95,7 +95,7 @@ namespace dbcontext
             modelBuilder.Entity<TalentManager>()
                 .Property(e => e.Telephone)
                 .HasMaxLength(10)
-                .HasColumnType("INT(10)")
+                .HasColumnType("VARCHAR(20)")
                 .IsRequired();
 
             modelBuilder.Entity<TalentManager>()
@@ -118,7 +118,7 @@ namespace dbcontext
             modelBuilder.Entity<Opdrachtgever>()
                 .Property(e => e.Telephone)
                 .HasMaxLength(10)
-                .HasColumnType("INT(10)")
+                .HasColumnType("VARCHAR(20)")
                 .IsRequired();
 
 
