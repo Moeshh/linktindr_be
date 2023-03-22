@@ -63,6 +63,7 @@ namespace Linktindr_be.Controllers {
             m.PostCode = dto.PostCode;
             m.HouseNumber = dto.HouseNumber;
             m.Email = dto.Email;
+            m.Password = dto.Password;
             m.Telephone = dto.Telephone;
             m.Radius = dto.Radius;
             m.Uitstroomrichting = Enum.Parse<Specialization>(dto.Uitstroomrichting);

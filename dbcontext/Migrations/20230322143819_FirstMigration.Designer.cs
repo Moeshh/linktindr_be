@@ -11,7 +11,7 @@ using dbcontext;
 namespace dbcontext.Migrations
 {
     [DbContext(typeof(OurContext))]
-    [Migration("20230322141224_FirstMigration")]
+    [Migration("20230322143819_FirstMigration")]
     partial class FirstMigration
     {
         /// <inheritdoc />
@@ -73,7 +73,7 @@ namespace dbcontext.Migrations
 
                     b.Property<string>("Telephone")
                         .IsRequired()
-                        .HasMaxLength(10)
+                        .HasMaxLength(20)
                         .HasColumnType("VARCHAR(20)");
 
                     b.Property<string>("Uitstroomrichting")
@@ -109,7 +109,7 @@ namespace dbcontext.Migrations
 
                     b.Property<string>("Telephone")
                         .IsRequired()
-                        .HasMaxLength(10)
+                        .HasMaxLength(20)
                         .HasColumnType("VARCHAR(20)");
 
                     b.HasKey("Id");
@@ -198,7 +198,7 @@ namespace dbcontext.Migrations
 
                     b.Property<string>("Telephone")
                         .IsRequired()
-                        .HasMaxLength(10)
+                        .HasMaxLength(20)
                         .HasColumnType("VARCHAR(20)");
 
                     b.HasKey("Id");

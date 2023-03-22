@@ -9,6 +9,7 @@ namespace Linktindr_be.Dto
         public string PostCode { get; set; }
         public string HouseNumber { get; set; }
         public string Email { get; set; }
+        public string Password { get; set; }
         public string Telephone { get; set; }
         public int Radius { get; set; }
         public string Uitstroomrichting { get; set; }

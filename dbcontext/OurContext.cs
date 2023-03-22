@@ -48,7 +48,7 @@ namespace dbcontext
 
             modelBuilder.Entity<Medewerker>()
                 .Property(e => e.Telephone)
-                .HasMaxLength(10)
+                .HasMaxLength(20)
                 .HasColumnType("VARCHAR(20)")
                 .IsRequired();
 
@@ -94,7 +94,7 @@ namespace dbcontext
 
             modelBuilder.Entity<TalentManager>()
                 .Property(e => e.Telephone)
-                .HasMaxLength(10)
+                .HasMaxLength(20)
                 .HasColumnType("VARCHAR(20)")
                 .IsRequired();
 
@@ -117,7 +117,7 @@ namespace dbcontext
 
             modelBuilder.Entity<Opdrachtgever>()
                 .Property(e => e.Telephone)
-                .HasMaxLength(10)
+                .HasMaxLength(20)
                 .HasColumnType("VARCHAR(20)")
                 .IsRequired();
 

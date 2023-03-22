@@ -11,7 +11,7 @@ namespace Linktindr_be.Controllers {
     [ApiController]
     public class TalentmanagerController : ControllerBase {
         
-        private OurContext OC;
+        private readonly OurContext OC;
 
         public TalentmanagerController(OurContext OC) {
             this.OC = OC;
@@ -39,7 +39,9 @@ namespace Linktindr_be.Controllers {
             TalentManager t = new TalentManager();
             t.Name = tni.Name;
             t.Email = tni.Email;
+            t.Password = tni.Password;
             t.Telephone = tni.Telephone;
+
             OC.Add(t);
             OC.SaveChanges();
 
@@ -58,6 +60,7 @@ namespace Linktindr_be.Controllers {
             dbTalentManager.Name = t.Name;
             dbTalentManager.Email = t.Email;
             dbTalentManager.Telephone = t.Telephone;
+            dbTalentManager.Password = t.Password;
 
             OC.TalentManager.Update(dbTalentManager);
             OC.SaveChanges();
