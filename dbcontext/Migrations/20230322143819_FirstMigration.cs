@@ -27,7 +27,7 @@ namespace dbcontext.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Name = table.Column<string>(type: "VARCHAR(255)", maxLength: 255, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Telephone = table.Column<string>(type: "VARCHAR(10)", maxLength: 10, nullable: false)
+                    Telephone = table.Column<string>(type: "VARCHAR(20)", maxLength: 20, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
@@ -48,7 +48,7 @@ namespace dbcontext.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Name = table.Column<string>(type: "VARCHAR(255)", maxLength: 255, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Telephone = table.Column<string>(type: "VARCHAR(10)", maxLength: 10, nullable: false)
+                    Telephone = table.Column<string>(type: "VARCHAR(20)", maxLength: 20, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
@@ -112,7 +112,7 @@ namespace dbcontext.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Name = table.Column<string>(type: "VARCHAR(255)", maxLength: 255, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Telephone = table.Column<string>(type: "VARCHAR(10)", maxLength: 10, nullable: false)
+                    Telephone = table.Column<string>(type: "VARCHAR(20)", maxLength: 20, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>

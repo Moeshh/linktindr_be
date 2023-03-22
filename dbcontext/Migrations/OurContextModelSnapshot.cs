@@ -70,7 +70,7 @@ namespace dbcontext.Migrations
 
                     b.Property<string>("Telephone")
                         .IsRequired()
-                        .HasMaxLength(10)
+                        .HasMaxLength(20)
                         .HasColumnType("VARCHAR(20)");
 
                     b.Property<string>("Uitstroomrichting")
@@ -106,7 +106,7 @@ namespace dbcontext.Migrations
 
                     b.Property<string>("Telephone")
                         .IsRequired()
-                        .HasMaxLength(10)
+                        .HasMaxLength(20)
                         .HasColumnType("VARCHAR(20)");
 
                     b.HasKey("Id");
@@ -195,7 +195,7 @@ namespace dbcontext.Migrations
 
                     b.Property<string>("Telephone")
                         .IsRequired()
-                        .HasMaxLength(10)
+                        .HasMaxLength(20)
                         .HasColumnType("VARCHAR(20)");
 
                     b.HasKey("Id");
