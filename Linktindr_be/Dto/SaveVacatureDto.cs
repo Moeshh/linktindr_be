@@ -1,14 +1,13 @@
-﻿namespace dbcontext.Classes
+﻿namespace Linktindr_be.Dto
 {
-    public class Vacature {
-        public int Id { get; set; }
+    public class SaveVacatureDto
+    {
         public string Title { get; set; }
         public string Description { get; set; }
-        public Specialization Uitstroomrichting { get; set; }
+        public string Uitstroomrichting { get; set; }
         public string Location { get; set; }
         public DateTime Startdate { get; set; }
         public DateTime Enddate { get; set; }
-        public virtual Opdrachtgever Opdrachtgever { get; set; }
+        public int OpdrachtgeverId { get; set; }
     }
-
 }

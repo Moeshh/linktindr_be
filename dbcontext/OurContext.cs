@@ -1,13 +1,5 @@
 using dbcontext.Classes;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace dbcontext
 {
@@ -15,47 +7,18 @@ namespace dbcontext
     {
         public OurContext(DbContextOptions options) : base(options) { }
         public DbSet<Medewerker> Medewerker { get; set; }
-        public DbSet<Vacatures> Vacatures { get; set; }
-        public DbSet<TalentManager> Talentmanager { get; set; }
-        public DbSet<Sollicitatie> Sollicitatie { get; set; }
         public DbSet<Opdrachtgever> Opdrachtgever { get; set; }
         public DbSet<Plaatsing> Plaatsing { get; set; }
-        public DbSet<Users> Users { get; set; }
+        public DbSet<Sollicitatie> Sollicitatie { get; set; }
+        public DbSet<TalentManager> TalentManager { get; set; }
+        public DbSet<Vacature> Vacatures { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
-            //Talentmanager
-            modelBuilder.Entity<TalentManager>()
-                .Property(e => e.FirstName)
-                .HasMaxLength(255)
-                .HasColumnType("VARCHAR(255)")
-                .IsRequired();
 
-            modelBuilder.Entity<TalentManager>()
-                .Property(e => e.LastName)
-                .HasMaxLength(255)
-                .HasColumnType("VARCHAR(255)")
-                .IsRequired();
-
-            modelBuilder.Entity<TalentManager>()
-                .Property(e => e.Email)
-                .HasMaxLength(255)
-                .HasColumnType("VARCHAR(255)")
-                .IsRequired();
-
-            modelBuilder.Entity<TalentManager>()
-                .Property(e => e.Telephone)
-                .HasMaxLength(10)
-                .HasColumnType("INT(10)")
-                .IsRequired();
-
-            //Medewerker
-            modelBuilder.Entity<Medewerker>()
-                .Property(e => e.FirstName)
-                .HasMaxLength(255)
-                .HasColumnType("VARCHAR(255)")
-                .IsRequired();
+            // Medewerker
 
             modelBuilder.Entity<Medewerker>()
-                .Property(e => e.LastName)
+                .Property(e => e.Name)
                 .HasMaxLength(255)
                 .HasColumnType("VARCHAR(255)")
                 .IsRequired();
@@ -95,18 +58,12 @@ namespace dbcontext
                 .HasColumnType("INT(3)")
                 .IsRequired();
 
-            var specializationEnumValues = Enum.GetValues(typeof(Specialization))
-                .Cast<Specialization>()
-                .Select(s => s.GetDescription())
-                .ToList();
-
-            var allowedValues = string.Join("', '", specializationEnumValues);
-            
             modelBuilder.Entity<Medewerker>()
                 .Property(e => e.Uitstroomrichting)
-                .HasConversion<string>()
-                .HasColumnType($"ENUM('{allowedValues}')")
-                .IsRequired();
+                .IsRequired()
+                .HasConversion(
+                    v => v.ToString(),
+                    v => Enum.Parse<Specialization>(v));
 
             modelBuilder.Entity<Medewerker>()
                 .Property(e => e.Photo)
@@ -117,40 +74,35 @@ namespace dbcontext
                 .Property(e => e.ProfileText)
                 .HasColumnType("TEXT");
 
-            //Vacature
-            modelBuilder.Entity<Vacatures>()
-                .Property(e => e.Title)
+            modelBuilder.Entity<Medewerker>()
+                .HasOne(m => m.TalentManager);
+
+
+            // Talentmanager
+
+            modelBuilder.Entity<TalentManager>()
+                .Property(e => e.Name)
                 .HasMaxLength(255)
                 .HasColumnType("VARCHAR(255)")
                 .IsRequired();
 
-            modelBuilder.Entity<Vacatures>()
-                .Property(e => e.Description)
-                .HasColumnType("TEXT");
-
-            modelBuilder.Entity<Vacatures>()
-                .Property(e => e.Uitstroomrichting)
-                .HasConversion<string>()
-                .HasColumnType($"ENUM('{allowedValues}')")
-                .IsRequired();
-
-            modelBuilder.Entity<Vacatures>()
-                .Property(e => e.Location)
+            modelBuilder.Entity<TalentManager>()
+                .Property(e => e.Email)
                 .HasMaxLength(255)
                 .HasColumnType("VARCHAR(255)")
                 .IsRequired();
 
-            modelBuilder.Entity<Vacatures>()
-                .Property(e => e.Startdate)
-                .HasColumnType("Datetime(6)")
+            modelBuilder.Entity<TalentManager>()
+                .Property(e => e.Telephone)
+                .HasMaxLength(10)
+                .HasColumnType("INT(10)")
                 .IsRequired();
 
-            modelBuilder.Entity<Vacatures>()
-                .Property(e => e.Enddate)
-                .HasColumnType("Datetime(6)")
-                .IsRequired();
+            modelBuilder.Entity<TalentManager>()
+                .HasMany(t => t.Medewerkers);
 
-            //opdrachtgever
+            // Opdrachtgever
+
             modelBuilder.Entity<Opdrachtgever>()
                 .Property(e => e.Name)
                 .HasMaxLength(255)
@@ -169,12 +121,15 @@ namespace dbcontext
                 .HasColumnType("INT(10)")
                 .IsRequired();
 
-            //Sollicitatie
+
+            // Sollicitatie
+
             modelBuilder.Entity<Sollicitatie>()
                 .Property(e => e.Status)
-                .HasColumnType($"ENUM('{string.Join("', '", Enum.GetNames(typeof(StatusEnum)))}')")
-                .HasDefaultValue(StatusEnum.Match)
-                .IsRequired();
+                .IsRequired()
+                .HasConversion(
+                    v => v.ToString(),
+                    v => Enum.Parse<StatusEnum>(v));
 
             modelBuilder.Entity<Sollicitatie>()
                 .Property(e => e.Medewerker_akkoord)
@@ -188,24 +143,41 @@ namespace dbcontext
                 .HasDefaultValue(0)
                 .IsRequired();
 
-            //Plaatsing
+            // Vacature
 
-            //Users
-            modelBuilder.Entity<Users>()
-                .Property(e => e.email)
+            modelBuilder.Entity<Vacature>()
+                .Property(e => e.Title)
                 .HasMaxLength(255)
                 .HasColumnType("VARCHAR(255)")
                 .IsRequired();
-            modelBuilder.Entity<Users>()
-                .Property(e => e.password)
+
+            modelBuilder.Entity<Vacature>()
+                .Property(e => e.Description)
+                .HasColumnType("TEXT");
+
+            modelBuilder.Entity<Vacature>()
+                .Property(e => e.Uitstroomrichting)
+                .IsRequired()
+                .HasConversion(
+                    v => v.ToString(),
+                    v => Enum.Parse<Specialization>(v));
+
+            modelBuilder.Entity<Vacature>()
+                .Property(e => e.Location)
                 .HasMaxLength(255)
                 .HasColumnType("VARCHAR(255)")
                 .IsRequired();
-            modelBuilder.Entity<Users>()
-                .Property(e => e.usertype)
-                .HasConversion<string>()
-                .HasColumnType($"ENUM('{allowedValues}')")
+
+            modelBuilder.Entity<Vacature>()
+                .Property(e => e.Startdate)
+                .HasColumnType("Datetime(6)")
                 .IsRequired();
+
+            modelBuilder.Entity<Vacature>()
+                .Property(e => e.Enddate)
+                .HasColumnType("Datetime(6)")
+                .IsRequired();
+
         }
 
     }
