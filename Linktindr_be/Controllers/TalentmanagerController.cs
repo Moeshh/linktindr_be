@@ -16,8 +16,9 @@ namespace Linktindr_be.Controllers {
 
         // GET: api/<ValuesController>
         [HttpGet]
-        public List<TalentManager> Get() {
-            
+        public IEnumerable<TalentManager> Get() {
+            return OC.Talentmanager;
+            /*
             List<TalentManager> tcsv = System.IO.File.ReadAllLines("C:\\Users\\vivo-\\source\\repos\\Linktindr_be\\Linktindr_be\\dataSet_linktindr_werknemer.csv")
                 .Skip(1)
                 .Select(v => TalentManagerDTO.FromCsv(v))
@@ -28,8 +29,9 @@ namespace Linktindr_be.Controllers {
                 OC.Add(tm);
                 OC.SaveChanges();
             }
-
+            
             return tcsv;
+            */
         }
 
         // GET (specific) api/<TalentmanagerController>/{id}

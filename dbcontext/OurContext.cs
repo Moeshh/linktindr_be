@@ -192,17 +192,17 @@ namespace dbcontext
 
             //Users
             modelBuilder.Entity<Users>()
-                .Property(e => e.email)
+                .Property(e => e.Email)
                 .HasMaxLength(255)
                 .HasColumnType("VARCHAR(255)")
                 .IsRequired();
             modelBuilder.Entity<Users>()
-                .Property(e => e.password)
+                .Property(e => e.Password)
                 .HasMaxLength(255)
                 .HasColumnType("VARCHAR(255)")
                 .IsRequired();
             modelBuilder.Entity<Users>()
-                .Property(e => e.usertype)
+                .Property(e => e.Usertype)
                 .HasConversion<string>()
                 .HasColumnType($"ENUM('{allowedValues}')")
                 .IsRequired();
