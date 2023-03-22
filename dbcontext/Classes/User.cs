@@ -5,19 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace dbcontext.Classes {
-    public enum UsertypeEnum {
-        Medewerker,
-        Talentmanager,
-        Opdrachtgever
-    }
-
-    public class Users {
+    public abstract class User {
         public int Id { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public UsertypeEnum Usertype { get; set; }
+        public string Name { get; set; }
+        public string Telephone { get; set; }
     }
-
+/*
     public class Users_noid {
         public string Email { get; set; }
         public string Password { get; set; }
@@ -77,5 +72,5 @@ namespace dbcontext.Classes {
         public string? ProfileText { get; set; }
         //public int TalentManager { get; set; }
     }
-
+*/
 }

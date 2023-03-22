@@ -1,10 +1,10 @@
 ﻿namespace Linktindr_be.Dto
 {
-    public class SaveTalentmanagerDto
+    public class SaveOpdrachtgeverDto
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public string Telephone { get; set; }
+
     }
 }

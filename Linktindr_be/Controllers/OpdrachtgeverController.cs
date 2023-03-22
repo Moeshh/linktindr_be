@@ -1,5 +1,6 @@
 ﻿using dbcontext;
 using dbcontext.Classes;
+using Linktindr_be.Dto;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -8,9 +9,11 @@ namespace Linktindr_be.Controllers {
     [Route("api/[controller]")]
     [ApiController]
     public class OpdrachtgeverController : ControllerBase {
-        OurContext OC;
-        public OpdrachtgeverController(OurContext oC) {
-            OC = oC;
+        
+        private readonly OurContext OC;
+
+        public OpdrachtgeverController(OurContext OC) {
+            this.OC = OC;
         }
 
         // GET: api/<ValuesController>
@@ -21,15 +24,13 @@ namespace Linktindr_be.Controllers {
 
         // GET (specific) api/<OpdrachtgeverController>/{id}
         [HttpGet("{id}")]
-        public Opdrachtgever Get(int id) {
-            Opdrachtgever t = OC.Opdrachtgever.Find(id);
-
-            return t;
+        public Opdrachtgever? Get(int id) {
+            return OC.Opdrachtgever.Find(id);
         }
 
         // ADD api/<OpdrachtgeverController>/add
         [HttpPost("add")]
-        public string Add(Opdrachtgever_NoId oni) {
+        public bool Add(SaveOpdrachtgeverDto oni) {
             Opdrachtgever o = new Opdrachtgever();
             o.Name = oni.Name;
             o.Email = oni.Email;
@@ -37,15 +38,16 @@ namespace Linktindr_be.Controllers {
 
             OC.Add(o);
             OC.SaveChanges();
-            return "gelukt";
+
+            return true;
         }
 
         // PUT api/<OpdrachtgeverController>/update
-        [HttpPut("update")]
-        public string Put(Opdrachtgever o) {
-            Opdrachtgever ooc = OC.Opdrachtgever.Find(o.Id);
+        [HttpPut("update/{id:int}")]
+        public bool Put(int id, SaveOpdrachtgeverDto o) {
+            Opdrachtgever? ooc = OC.Opdrachtgever.Find(id);
             if(ooc == null) {
-                return "gefaald";
+                return false;
             }
 
             ooc.Name = o.Name;
@@ -55,21 +57,21 @@ namespace Linktindr_be.Controllers {
             OC.Opdrachtgever.Update(ooc);
             OC.SaveChanges();
 
-            return "gelukt";
+            return true;
         }
 
         // DELETE api/<OpdrachtgeverController>/delete
-        [HttpDelete("delete")]
-        public string Delete(int id) {
-            Opdrachtgever t = OC.Opdrachtgever.Find(id);
-            if(t == null) {
-                return "gefaald";
+        [HttpDelete("delete/{id:int}")]
+        public bool Delete(int id) {
+            Opdrachtgever? dbOpdrachtgever = OC.Opdrachtgever.Find(id);
+            if(dbOpdrachtgever == null) {
+                return false;
             }
 
-            OC.Opdrachtgever.Remove(t);
+            OC.Opdrachtgever.Remove(dbOpdrachtgever);
             OC.SaveChanges();
 
-            return "gelukt";
+            return true;
         }
     }
 }
