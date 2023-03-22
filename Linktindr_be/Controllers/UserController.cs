@@ -17,6 +17,8 @@ namespace Linktindr_be.Controllers
             this.OC = OC;
         }
 
+        [HttpPost]
+        [Route("login")]
         public LoginResponseDto login([FromBody] LoginRequestDto dto)
         {
             // Check medewerker

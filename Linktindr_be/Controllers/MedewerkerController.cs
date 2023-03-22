@@ -77,7 +77,7 @@ namespace Linktindr_be.Controllers {
         // PUT api/<MedewerkerController>/update
         // api/medewerker/1/update
         [HttpPut("update/{id:int}")]
-        public bool Put(int id, SaveMedewerkerDto m) {
+        public bool Put(int id, [FromBody] SaveMedewerkerDto m) {
             // Medewerker kan ook mogelijk niet gevonden worden dus ? erbij
             Medewerker? dbMedewerker = OC.Medewerker.Find(id);
 
