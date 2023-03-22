@@ -1,5 +1,6 @@
 ﻿using dbcontext;
 using dbcontext.Classes;
+using Linktindr_be.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,65 +10,70 @@ namespace Linktindr_be.Controllers {
     [Route("api/[controller]")]
     [ApiController]
     public class VacatureController : ControllerBase {
-        OurContext OC;
-        public VacatureController(OurContext oC) {
-            OC = oC;
+        private OurContext OC;
+
+        public VacatureController(OurContext OC) {
+            this.OC = OC;
         }
 
         // GET: api/<VacatureController>
         [HttpGet]
-        public IEnumerable<VacaturesDTO> Get() {
+        public IEnumerable<VacatureDto> Get() {
             return OC.Vacatures.Include(v => v.Opdrachtgever)
-                .Select(v => new VacaturesDTO(v))
+                .Select(v => new VacatureDto(v))
                 .ToList();
         }
 
         // GET (specific) api/<VacatureController>/{id}
         [HttpGet("{id}")]
-        public VacaturesDTO Get(int id) {
-            if(OC.Vacatures.Find(id) == null) {
-                VacaturesDTO vdto = new VacaturesDTO();
-                vdto.Id = -1;
-                vdto.Title = "Invalid";
-                vdto.Description = "ID";
-                return vdto;
-            }
+        public VacatureDto? Get(int id) {
+            Vacature? v = OC.Vacatures.Find(id);
+            if (v == null)
+                return null;
 
-            VacaturesDTO v = new VacaturesDTO(OC.Vacatures.Include(v => v.Opdrachtgever)
-                .FirstOrDefault(v => v.Id == id));
-
-            return v;
+            return new VacatureDto(v);
         }
 
         // ADD api/<VacatureController>/add
         [HttpPost("add")]
-        public string Add(Vacatures_NoId vni) {
-            Vacatures v = new Vacatures();
-            v.Opdrachtgever = OC.Opdrachtgever.Find(vni.OpdrachtgeverId);
+        public bool Add([FromBody] SaveVacatureDto vni)
+        {
+            Opdrachtgever? o = OC.Opdrachtgever.Find(vni.OpdrachtgeverId);
+            if (o == null)
+                return false;
+
+            Vacature v = new Vacature();
+            v.Opdrachtgever = o;
             v.Title = vni.Title;
             v.Description = vni.Description;
-            v.Uitstroomrichting = vni.Uitstroomrichting;
+            v.Uitstroomrichting = Enum.Parse<Specialization>(vni.Uitstroomrichting);
             v.Location = vni.Location;
             v.Startdate = vni.Startdate;
             v.Enddate = vni.Enddate;
 
             OC.Add(v);
             OC.SaveChanges();
-            return "gelukt";
+            return true;
         }
 
         // PUT api/<VacatureController>/update
-        [HttpPut("update")]
-        public string Put(VacaturesInputDTO v) {
-            Vacatures voc = OC.Vacatures.Find(v.Id);
+        [HttpPut("update/{id:int}")]
+        public bool Put(int id, [FromBody] SaveVacatureDto v) {
+            Vacature? voc = OC.Vacatures.Find(id);
             if(voc == null) {
-                return "gefaald";
+                return false;
             }
 
-            voc.Opdrachtgever = OC.Opdrachtgever.Find(v.OpdrachtgeverId);
+            Opdrachtgever? o = OC.Opdrachtgever.Find(v.OpdrachtgeverId);
+            if (o == null)
+            {
+                return false;
+            }
+
+            voc.Opdrachtgever = o;
             voc.Title = v.Title;
             voc.Description = v.Description;
-            voc.Uitstroomrichting = v.Uitstroomrichting;
+            voc.Uitstroomrichting = Enum.Parse<Specialization>(v.Uitstroomrichting);
             voc.Location = v.Location;
             voc.Startdate = v.Startdate;
             voc.Enddate = v.Enddate;
@@ -75,21 +81,21 @@ namespace Linktindr_be.Controllers {
             OC.Vacatures.Update(voc);
             OC.SaveChanges();
 
-            return "gelukt";
+            return true;
         }
 
         // DELETE api/<VacatureController>/delete
         [HttpDelete("delete")]
-        public string Delete(int id) {
-            Vacatures v = OC.Vacatures.Find(id);
+        public bool Delete(int id) {
+            Vacature? v = OC.Vacatures.Find(id);
             if(v == null) {
-                return "gefaald";
+                return false;
             }
 
             OC.Vacatures.Remove(v);
             OC.SaveChanges();
 
-            return "gelukt";
+            return true;
         }
     }
 }

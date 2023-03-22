@@ -1,5 +1,6 @@
 ﻿using dbcontext;
 using dbcontext.Classes;
+using Linktindr_be.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,112 +10,129 @@ namespace Linktindr_be.Controllers {
     [Route("api/[controller]")]
     [ApiController]
     public class MedewerkerController : ControllerBase {
-        OurContext OC;
-        public MedewerkerController(OurContext oC) {
-            OC = oC;
+        
+        private readonly OurContext OC;
+
+        public MedewerkerController(OurContext OC) {
+            this.OC = OC;
         }
 
         // GET: api/<MedewerkerController>
         [HttpGet]
-        public List<Medewerker> Get() {
-            /*
+        public List<MedewerkerDto> Get() {
             return OC.Medewerker.Include(m => m.TalentManager)
-                .Select(m => new MedewerkerDTO(m))
+                .Select(m => new MedewerkerDto(m))
                 .ToList();
-            */
-            List<Medewerker> test = System.IO.File.ReadAllLines("C:\\Users\\vivo-\\source\\repos\\Linktindr_be\\Linktindr_be\\dataSet_linktindr_werknemer.csv")
-                .Skip(1)
-                .Select(v => Medewerker.FromCsv(v))
-                .ToList();
-
-            return test;
         }
 
         // GET (specific) api/<MedewerkerController>/{id}
         [HttpGet("{id}")]
-        public MedewerkerDTO Get(int id) {
-            if(OC.Medewerker.Find(id) == null) {
-                MedewerkerDTO mdto = new MedewerkerDTO();
-                mdto.Id = -1;
-                mdto.FirstName = "Invalid";
-                mdto.LastName = "ID";
-                return mdto;
-            }
+        public MedewerkerDto? Get(int id) {
+            // Haal eerst de medewerker op. Met de ? geven we aan dat die null kan zijn
+            Medewerker? m = OC.Medewerker.Include(m => m.TalentManager).FirstOrDefault(m => m.Id == id);
 
-            MedewerkerDTO m = new MedewerkerDTO(OC.Medewerker.Include(m => m.TalentManager)
-                .FirstOrDefault(m => m.Id == id));
+            // Als die null is dan is die niet gevonden dus dan kunnen we ook null 
+            // terug geven. Dan is de response body leeg. 
+            if (m == null)
+                return null;
 
-            return m;
+            // Hier is de medewerker dus bekend en die kan je omzetten
+            return new MedewerkerDto(m);
         }
 
         //GET (maak nieuwe medewerker aan) api/<MedewerkerController>/add
         [HttpPost("add")]
-        public string Add(Medewerker_NoId mni) {
-            Medewerker m = new Medewerker();
+        public bool Add(SaveMedewerkerDto dto) {
+            // Wordt deze nog wel gebruikt aangezien we een centrale endpoint
+            // maken die alle users aanmaken
 
-            m.TalentManager = OC.Talentmanager.Find(mni.TalentManagerId);
-            m.FirstName = mni.FirstName;
-            m.LastName = mni.LastName;
-            m.PostCode = mni.PostCode;
-            m.HouseNumber = mni.HouseNumber;
-            m.DateOfBirth = mni.DateOfBirth;
-            m.PostCode = mni.PostCode;
-            m.HouseNumber = mni.HouseNumber;
-            m.Email = mni.Email;
-            m.Telephone = mni.Telephone;
-            m.Radius = mni.Radius;
-            m.Uitstroomrichting = mni.Uitstroomrichting;
-            m.Photo = mni.Photo;
-            m.ProfileText = mni.ProfileText;
+            // Haal de talent manager op. 
+            TalentManager? t = OC.TalentManager.Find(dto.TalentManagerId);
+
+            // Als die niet gevonden kan worden dan geven we false terug. Namelijk je
+            // wilt ervoor zorgen dat alleen bestaande foreign keys worden gebruikt
+            if (t == null)
+                return false;
+
+            Medewerker m = new Medewerker();
+            m.TalentManager = t;
+            m.Name = dto.Name;
+            m.PostCode = dto.PostCode;
+            m.HouseNumber = dto.HouseNumber;
+            m.DateOfBirth = dto.DateOfBirth;
+            m.PostCode = dto.PostCode;
+            m.HouseNumber = dto.HouseNumber;
+            m.Email = dto.Email;
+            m.Telephone = dto.Telephone;
+            m.Radius = dto.Radius;
+            m.Uitstroomrichting = Enum.Parse<Specialization>(dto.Uitstroomrichting);
+            m.Photo = dto.Photo;
+            m.ProfileText = dto.ProfileText;
 
             OC.Add(m);
             OC.SaveChanges();
-            return "gelukt";
+            return true;
         }
 
         // PUT api/<MedewerkerController>/update
-        [HttpPut("update")]
-        public string Put(MedewerkerInputDTO m) {
-            Medewerker moc = OC.Medewerker.Find(m.Id);
-            if(moc == null) {
-                return "gefaald";
+        // api/medewerker/1/update
+        [HttpPut("update/{id:int}")]
+        public bool Put(int id, SaveMedewerkerDto m) {
+            // Medewerker kan ook mogelijk niet gevonden worden dus ? erbij
+            Medewerker? dbMedewerker = OC.Medewerker.Find(id);
+
+            // Als die niet is gevonden geven we iets terug om aan te geven dat
+            // het niet gelutk is
+            if(dbMedewerker == null) {
+                // Hier stond return "gefaald" echter strings zijn onhandige error 
+                // codes dus vaak wordt hier een int of een boolean gebruikt. Dat
+                // is namelijk korter
+                return false;
             }
 
-            TalentManager t = OC.Talentmanager.Find(m.TalentManagerId);
+            // Haal de talent manager op. 
+            TalentManager? t = OC.TalentManager.Find(m.TalentManagerId);
 
-            moc.TalentManager = t;
-            moc.FirstName = m.FirstName;
-            moc.LastName = m.LastName;
-            moc.PostCode = m.PostCode;
-            moc.HouseNumber = m.HouseNumber;
-            moc.DateOfBirth = m.DateOfBirth;
-            moc.PostCode = m.PostCode;
-            moc.HouseNumber = m.HouseNumber;
-            moc.Email = m.Email;
-            moc.Telephone = m.Telephone;
-            moc.Radius = m.Radius;
-            moc.Uitstroomrichting = m.Uitstroomrichting;
-            moc.Photo = m.Photo;
-            moc.ProfileText = m.ProfileText;
+            // Als die niet gevonden kan worden dan geven we false terug. Namelijk je
+            // wilt ervoor zorgen dat alleen bestaande foreign keys worden gebruikt
+            if (t == null)
+                return false;
 
-            OC.Medewerker.Update(moc);
+            // Nu pas kunnen we het object aanpassen nadat alle referenties / foreign
+            // keys zijn geverifieerd
+            dbMedewerker.TalentManager = t;
+            dbMedewerker.Name = m.Name;
+            dbMedewerker.PostCode = m.PostCode;
+            dbMedewerker.HouseNumber = m.HouseNumber;
+            dbMedewerker.DateOfBirth = m.DateOfBirth;
+            dbMedewerker.PostCode = m.PostCode;
+            dbMedewerker.HouseNumber = m.HouseNumber;
+            dbMedewerker.Email = m.Email;
+            dbMedewerker.Telephone = m.Telephone;
+            dbMedewerker.Radius = m.Radius;
+            dbMedewerker.Uitstroomrichting = Enum.Parse<Specialization>(m.Uitstroomrichting);
+            dbMedewerker.Photo = m.Photo;
+            dbMedewerker.ProfileText = m.ProfileText;
+
+            OC.Medewerker.Update(dbMedewerker);
             OC.SaveChanges();
 
-            return "gelukt";
+            return true;
         }
 
         // DELETE api/<MedewerkerController>/delete
-        [HttpDelete("delete")]
-        public string Delete(int id) {
-            Medewerker m = OC.Medewerker.Find(id);
-            if(m == null) {
-                return "gefaald";
+        [HttpDelete("delete/{id:int}")]
+        public bool Delete(int id) {
+            // Medewerker kan ook mogelijk niet gevonden worden dus ? erbij
+            Medewerker? dbMedewerker = OC.Medewerker.Find(id);
+            if(dbMedewerker == null) {
+                return false;
             }
 
-            OC.Medewerker.Remove(m);
+            OC.Medewerker.Remove(dbMedewerker);
             OC.SaveChanges();
 
-            return "gelukt";
+            return true;
         }
     }
 }

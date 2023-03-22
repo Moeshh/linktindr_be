@@ -1,5 +1,6 @@
 ﻿using dbcontext;
 using dbcontext.Classes;
+using Linktindr_be.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,90 +10,73 @@ namespace Linktindr_be.Controllers {
     [Route("api/[controller]")]
     [ApiController]
     public class TalentmanagerController : ControllerBase {
-        OurContext OC;
-        public TalentmanagerController(OurContext oC) {
-            OC = oC;
+        
+        private OurContext OC;
+
+        public TalentmanagerController(OurContext OC) {
+            this.OC = OC;
         }
 
         // GET: api/<ValuesController>
         [HttpGet]
-        public List<TalentManager> Get() {
-            
-            List<TalentManager> tcsv = System.IO.File.ReadAllLines("C:\\Users\\vivo-\\source\\repos\\Linktindr_be\\Linktindr_be\\dataSet_linktindr_werknemer.csv")
-                .Skip(1)
-                .Select(v => TalentManagerDTO.FromCsv(v))
-                .ToList();
-
-            
-            foreach(TalentManager tm in tcsv) {
-                OC.Add(tm);
-                OC.SaveChanges();
-            }
-
-            return tcsv;
+        public IEnumerable<TalentManager> Get() {
+            return OC.TalentManager.ToList();
         }
 
         // GET (specific) api/<TalentmanagerController>/{id}
-        [HttpGet("{id}")]
-        public TalentManagerDTO Get(int id) {
-            if(OC.Talentmanager.Find(id) == null) {
-                TalentManagerDTO tdto = new TalentManagerDTO();
-                tdto.Id = -1;
-                tdto.FirstName = "Invalid";
-                tdto.LastName = "ID";
-                return tdto;
-            }
+        [HttpGet("{id:int}")]
+        public TalentManagerDto? Get(int id) {
+            TalentManager? t = OC.TalentManager.Find(id);
+            if (t == null)
+                return null;
 
-            TalentManagerDTO t = new TalentManagerDTO(OC.Talentmanager.Find(id));
-
-            return t;
+            return new TalentManagerDto(t);
         }
 
         // ADD api/<TalentmanagerController>/add
         [HttpPost("add")]
-        public string Add(TalentManager_NoId tni) {
+        public bool Add(SaveTalentmanagerDto tni) {
             TalentManager t = new TalentManager();
-            t.FirstName = tni.FirstName;
-            t.LastName = tni.LastName;
+            t.Name = tni.Name;
             t.Email = tni.Email;
             t.Telephone = tni.Telephone;
             OC.Add(t);
             OC.SaveChanges();
 
-            return "gelukt";
+            return true;
         }
 
         // PUT api/<TalentmanagerController>/update
-        [HttpPut("update")]
-        public string Put(TalentManagerDTO t) {
-            TalentManager toc = OC.Talentmanager.Find(t.Id);
-            if(toc == null) {
-                return "gefaald";
+        [HttpPut("update/{id:int}")]
+        public bool Put(int id, [FromBody] SaveTalentmanagerDto t)
+        {
+            TalentManager? dbTalentManager = OC.TalentManager.Find(id);
+            if(dbTalentManager == null) {
+                return false;
             }
 
-            toc.FirstName = t.FirstName;
-            toc.LastName = t.LastName;
-            toc.Email = t.Email;
-            toc.Telephone = t.Telephone;
+            dbTalentManager.Name = t.Name;
+            dbTalentManager.Email = t.Email;
+            dbTalentManager.Telephone = t.Telephone;
 
-            OC.Talentmanager.Update(toc);
+            OC.TalentManager.Update(dbTalentManager);
             OC.SaveChanges();
 
-            return "gelukt";
+            return true;
         }
 
         // DELETE api/<TalentManagerController>/delete
-        [HttpDelete("delete")]
-        public string Delete(int id) {
-            TalentManager t = OC.Talentmanager.Find(id);
-            if(t == null) {
-                return "gefaald";
+        [HttpDelete("delete/{id:int}")]
+        public bool Delete(int id) {
+            TalentManager? dbTalentManager = OC.TalentManager.Find(id);
+            if(dbTalentManager == null) {
+                return false;
             }
 
-            OC.Talentmanager.Remove(t);
+            OC.TalentManager.Remove(dbTalentManager);
             OC.SaveChanges();
 
-            return "gelukt";
+            return true;
         }
     }
 }
