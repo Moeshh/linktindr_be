@@ -12,8 +12,38 @@ namespace dbcontext
         public DbSet<Sollicitatie> Sollicitatie { get; set; }
         public DbSet<TalentManager> TalentManager { get; set; }
         public DbSet<Vacature> Vacature { get; set; }
+<<<<<<< HEAD
+        public DbSet<Skill> Skill { get; set; }
+=======
 
+>>>>>>> main
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
+
+            // Skill
+
+            modelBuilder.Entity<Skill>()
+                .Property(e => e.Language)
+                .IsRequired()
+                .HasConversion(
+                    v => v.ToString(),
+                    v => Enum.Parse<Language>(v));
+
+            modelBuilder.Entity<Skill>()
+                .Property(e => e.Level)
+                .IsRequired()
+                .HasConversion(
+                    v => v.ToString(),
+                    v => Enum.Parse<Level>(v));
+
+            modelBuilder.Entity<Skill>()
+                .Property(e => e.Title)
+                .HasMaxLength(255)
+                .HasColumnType("VARCHAR(255)");
+
+            modelBuilder.Entity<Skill>()
+                .Property(e => e.Description)
+                .HasMaxLength(255)
+                .HasColumnType("VARCHAR(255)");
 
             // Medewerker
 
