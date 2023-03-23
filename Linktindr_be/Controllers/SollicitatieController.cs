@@ -50,7 +50,7 @@ namespace Linktindr_be.Controllers {
             if (m == null)
                 return false;
 
-            Vacature? v = OC.Vacatures.Find(sni.VacatureId);
+            Vacature? v = OC.Vacature.Find(sni.VacatureId);
             if (v == null)
                 return false;
 
@@ -81,7 +81,7 @@ namespace Linktindr_be.Controllers {
             if (m == null)
                 return false;
 
-            Vacature? v = OC.Vacatures.Find(saveDto.VacatureId);
+            Vacature? v = OC.Vacature.Find(saveDto.VacatureId);
             if (v == null)
                 return false;
 
