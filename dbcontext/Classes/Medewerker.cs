@@ -10,6 +10,8 @@
         public string Photo { get; set; }
         public string ProfileText { get; set; }
         public virtual TalentManager TalentManager { get; set; }
+        public virtual ICollection<Skill>? Skill { get; set; }
+        public virtual ICollection<Medewerker>? Medewerkers { get; set; }
     }
 
 }
