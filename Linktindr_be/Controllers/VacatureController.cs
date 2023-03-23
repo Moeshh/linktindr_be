@@ -27,7 +27,7 @@ namespace Linktindr_be.Controllers {
         // GET (specific) api/<VacatureController>/{id}
         [HttpGet("{id}")]
         public VacatureDto? Get(int id) {
-            Vacature? v = OC.Vacature.Find(id);
+            Vacature? v = OC.Vacature.Include(m => m.Opdrachtgever).FirstOrDefault(v => v.Id == id);
             if (v == null)
                 return null;
 
