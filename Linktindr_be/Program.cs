@@ -23,11 +23,6 @@ builder.Services.AddMvc(options =>
 });
 
 var app = builder.Build();
-app.UseCors(policy => policy
-    .AllowAnyMethod()
-    .AllowAnyHeader()
-    .SetIsOriginAllowed(origin => true)
-    .AllowCredentials());
 
 // Prevent front-end from getting CORS-errors by allowing requests from anywhere
 app.UseCors(policy => policy

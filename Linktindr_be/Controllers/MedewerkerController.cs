@@ -3,6 +3,7 @@ using dbcontext.Classes;
 using Linktindr_be.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -19,10 +20,17 @@ namespace Linktindr_be.Controllers {
 
         // GET: api/<MedewerkerController>
         [HttpGet]
-        public List<MedewerkerDto> Get() {
+        public List<MedewerkerDto> Get() {            
             return OC.Medewerker.Include(m => m.TalentManager)
                 .Select(m => new MedewerkerDto(m))
                 .ToList();
+            
+            /*List<Medewerker> test = System.IO.File.ReadAllLines("C:\\Users\\vivo-\\source\\repos\\Linktindr_be\\Linktindr_be\\dataSet_linktindr_werknemer.csv")
+                .Skip(1)
+                .Select(v => Medewerker.FromCsv(v))
+                .ToList();
+            */
+            //return test;
         }
 
         // GET (specific) api/<MedewerkerController>/{id}
@@ -79,9 +87,9 @@ namespace Linktindr_be.Controllers {
         // api/medewerker/1/update
         [HttpPut("update/{id:int}")]
         public bool Put(int id, [FromBody] SaveMedewerkerDto m) {
+            Debug.WriteLine(m);
             // Medewerker kan ook mogelijk niet gevonden worden dus ? erbij
             Medewerker? dbMedewerker = OC.Medewerker.Find(id);
-
             // Als die niet is gevonden geven we iets terug om aan te geven dat
             // het niet gelutk is
             if(dbMedewerker == null) {
