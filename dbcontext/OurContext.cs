@@ -12,11 +12,8 @@ namespace dbcontext
         public DbSet<Sollicitatie> Sollicitatie { get; set; }
         public DbSet<TalentManager> TalentManager { get; set; }
         public DbSet<Vacature> Vacature { get; set; }
-<<<<<<< HEAD
         public DbSet<Skill> Skill { get; set; }
-=======
 
->>>>>>> main
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
 
             // Skill
@@ -105,7 +102,13 @@ namespace dbcontext
                 .HasColumnType("TEXT");
 
             modelBuilder.Entity<Medewerker>()
+                .Property(e => e.Token)
+                .HasMaxLength(100)
+                .HasColumnType("VARCHAR(100)");
+
+            modelBuilder.Entity<Medewerker>()
                 .HasOne(m => m.TalentManager);
+
 
 
             // Talentmanager
@@ -127,6 +130,11 @@ namespace dbcontext
                 .HasMaxLength(20)
                 .HasColumnType("VARCHAR(20)")
                 .IsRequired();
+
+            modelBuilder.Entity<Medewerker>()
+                .Property(e => e.Token)
+                .HasMaxLength(100)
+                .HasColumnType("VARCHAR(100)");
 
             modelBuilder.Entity<TalentManager>()
                 .HasMany(t => t.Medewerkers);
@@ -150,6 +158,11 @@ namespace dbcontext
                 .HasMaxLength(20)
                 .HasColumnType("VARCHAR(20)")
                 .IsRequired();
+
+            modelBuilder.Entity<Medewerker>()
+                .Property(e => e.Token)
+                .HasMaxLength(100)
+                .HasColumnType("VARCHAR(100)");
 
 
             // Sollicitatie

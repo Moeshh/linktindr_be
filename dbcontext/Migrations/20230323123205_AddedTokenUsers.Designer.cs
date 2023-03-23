@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using dbcontext;
 
@@ -10,9 +11,11 @@ using dbcontext;
 namespace dbcontext.Migrations
 {
     [DbContext(typeof(OurContext))]
-    partial class OurContextModelSnapshot : ModelSnapshot
+    [Migration("20230323123205_AddedTokenUsers")]
+    partial class AddedTokenUsers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,9 +40,6 @@ namespace dbcontext.Migrations
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("VARCHAR(255)");
-
-                    b.Property<int?>("MedewerkerId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -86,8 +86,6 @@ namespace dbcontext.Migrations
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("MedewerkerId");
 
                     b.HasIndex("TalentManagerId");
 
@@ -150,45 +148,6 @@ namespace dbcontext.Migrations
                     b.HasIndex("SollicitatieId");
 
                     b.ToTable("Plaatsing");
-                });
-
-            modelBuilder.Entity("dbcontext.Classes.Skill", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("VARCHAR(255)");
-
-                    b.Property<string>("Language")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Level")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<int>("MedewerkerId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("SkillId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("VARCHAR(255)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MedewerkerId");
-
-                    b.HasIndex("SkillId");
-
-                    b.ToTable("Skill");
                 });
 
             modelBuilder.Entity("dbcontext.Classes.Sollicitatie", b =>
@@ -297,15 +256,11 @@ namespace dbcontext.Migrations
 
                     b.HasIndex("OpdrachtgeverId");
 
-                    b.ToTable("Vacature");
+                    b.ToTable("Vacatures");
                 });
 
             modelBuilder.Entity("dbcontext.Classes.Medewerker", b =>
                 {
-                    b.HasOne("dbcontext.Classes.Medewerker", null)
-                        .WithMany("Medewerkers")
-                        .HasForeignKey("MedewerkerId");
-
                     b.HasOne("dbcontext.Classes.TalentManager", "TalentManager")
                         .WithMany("Medewerkers")
                         .HasForeignKey("TalentManagerId")
@@ -332,21 +287,6 @@ namespace dbcontext.Migrations
                     b.Navigation("Medewerker");
 
                     b.Navigation("Sollicitatie");
-                });
-
-            modelBuilder.Entity("dbcontext.Classes.Skill", b =>
-                {
-                    b.HasOne("dbcontext.Classes.Medewerker", "Medewerker")
-                        .WithMany("Skill")
-                        .HasForeignKey("MedewerkerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("dbcontext.Classes.Skill", null)
-                        .WithMany("Skills")
-                        .HasForeignKey("SkillId");
-
-                    b.Navigation("Medewerker");
                 });
 
             modelBuilder.Entity("dbcontext.Classes.Sollicitatie", b =>
@@ -377,18 +317,6 @@ namespace dbcontext.Migrations
                         .IsRequired();
 
                     b.Navigation("Opdrachtgever");
-                });
-
-            modelBuilder.Entity("dbcontext.Classes.Medewerker", b =>
-                {
-                    b.Navigation("Medewerkers");
-
-                    b.Navigation("Skill");
-                });
-
-            modelBuilder.Entity("dbcontext.Classes.Skill", b =>
-                {
-                    b.Navigation("Skills");
                 });
 
             modelBuilder.Entity("dbcontext.Classes.TalentManager", b =>

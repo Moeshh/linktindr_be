@@ -9,12 +9,10 @@ using Microsoft.EntityFrameworkCore;
 namespace Linktindr_be.Controllers {
     [Route("api/[controller]")]
     [ApiController]
-    public class TalentmanagerController : ControllerBase {
+    public class TalentmanagerController : BaseController {
         
-        private readonly OurContext OC;
-
-        public TalentmanagerController(OurContext OC) {
-            this.OC = OC;
+        public TalentmanagerController(OurContext OC) : base(OC)
+        {
         }
 
         // GET: api/<ValuesController>

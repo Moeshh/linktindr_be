@@ -10,12 +10,10 @@ using Microsoft.EntityFrameworkCore;
 namespace Linktindr_be.Controllers {
     [Route("api/[controller]")]
     [ApiController]
-    public class SkillController : ControllerBase {
+    public class SkillController : BaseController {
 
-        private readonly OurContext OC;
-
-        public SkillController(OurContext OC) {
-            this.OC = OC;
+        public SkillController(OurContext OC) : base(OC)
+        {
         }
 
         // GET: api/<SkillController>
