@@ -75,7 +75,13 @@ namespace dbcontext
                 .HasColumnType("TEXT");
 
             modelBuilder.Entity<Medewerker>()
+                .Property(e => e.Token)
+                .HasMaxLength(100)
+                .HasColumnType("VARCHAR(100)");
+
+            modelBuilder.Entity<Medewerker>()
                 .HasOne(m => m.TalentManager);
+
 
 
             // Talentmanager
@@ -97,6 +103,11 @@ namespace dbcontext
                 .HasMaxLength(20)
                 .HasColumnType("VARCHAR(20)")
                 .IsRequired();
+
+            modelBuilder.Entity<Medewerker>()
+                .Property(e => e.Token)
+                .HasMaxLength(100)
+                .HasColumnType("VARCHAR(100)");
 
             modelBuilder.Entity<TalentManager>()
                 .HasMany(t => t.Medewerkers);
@@ -120,6 +131,11 @@ namespace dbcontext
                 .HasMaxLength(20)
                 .HasColumnType("VARCHAR(20)")
                 .IsRequired();
+
+            modelBuilder.Entity<Medewerker>()
+                .Property(e => e.Token)
+                .HasMaxLength(100)
+                .HasColumnType("VARCHAR(100)");
 
 
             // Sollicitatie

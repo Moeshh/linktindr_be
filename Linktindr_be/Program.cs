@@ -1,4 +1,5 @@
 using dbcontext;
+using Linktindr_be.Filters;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,11 +11,16 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
 builder.Services.AddDbContext<OurContext>(
     options => { options.UseMySql(builder.Configuration.GetConnectionString("Database"), ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("Database"))); }
-    );
+);
 
+builder.Services.AddScoped<AuthenticationFilter>();
+
+builder.Services.AddMvc(options =>
+{
+    options.Filters.Add<AuthenticationFilter>();
+});
 
 var app = builder.Build();
 app.UseCors(policy => policy
