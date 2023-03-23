@@ -32,7 +32,7 @@ namespace Linktindr_be.Controllers
             }
 
             // Check opdrachtgever
-            Opdrachtgever? o = OC.Opdrachtgever.FirstOrDefault(u => u.Email.Equals(dto.Email) && u.Password.Equals(dto.Email));
+            Opdrachtgever? o = OC.Opdrachtgever.FirstOrDefault(u => u.Email.Equals(dto.Email) && u.Password.Equals(dto.Password));
             if(o != null) {
                 LoginResponseDto LRD = new LoginResponseDto();
                 LRD.Success = true;
@@ -42,7 +42,7 @@ namespace Linktindr_be.Controllers
             }
 
             // Check talentmanager
-            TalentManager? t = OC.TalentManager.FirstOrDefault(u => u.Email.Equals(dto.Email) && u.Password.Equals(dto.Email));
+            TalentManager? t = OC.TalentManager.FirstOrDefault(u => u.Email.Equals(dto.Email) && u.Password.Equals(dto.Password));
             if(t != null) {
                 LoginResponseDto LRD = new LoginResponseDto();
                 LRD.Success = true;

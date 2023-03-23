@@ -34,6 +34,7 @@ namespace Linktindr_be.Controllers {
             Opdrachtgever o = new Opdrachtgever();
             o.Name = oni.Name;
             o.Email = oni.Email;
+            o.Password = oni.Password;
             o.Telephone = oni.Telephone;
 
             OC.Add(o);
