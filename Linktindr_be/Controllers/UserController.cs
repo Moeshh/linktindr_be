@@ -41,11 +41,7 @@ namespace Linktindr_be.Controllers
                 OC.Medewerker.Update(m);
                 OC.SaveChanges();
 
-                LoginResponseDto LRD = new LoginResponseDto();
-                LRD.Success = true;
-                LRD.Token = m.Token;
-                LRD.Usertype = "Medewerker";
-                return LRD;
+                return new LoginResponseDto(m);
             }
 
             // Check opdrachtgever
@@ -55,11 +51,7 @@ namespace Linktindr_be.Controllers
                 OC.Opdrachtgever.Update(o);
                 OC.SaveChanges();
 
-                LoginResponseDto LRD = new LoginResponseDto();
-                LRD.Success = true;
-                LRD.Token = o.Token;
-                LRD.Usertype = "Opdrachtgever";
-                return LRD;
+                return new LoginResponseDto(o);
             }
 
             // Check talentmanager
@@ -69,11 +61,7 @@ namespace Linktindr_be.Controllers
                 OC.TalentManager.Update(t);
                 OC.SaveChanges();
 
-                LoginResponseDto LRD = new LoginResponseDto();
-                LRD.Success = true;
-                LRD.Token = t.Token;
-                LRD.Usertype = "Talentmanager";
-                return LRD;
+                return new LoginResponseDto(t);
             }
 
             return new LoginResponseDto();
