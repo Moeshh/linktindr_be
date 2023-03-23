@@ -98,5 +98,15 @@ namespace Linktindr_be.Controllers {
 
             return true;
         }
+
+        // Lijst met bestaande opdrachtgevers vacature/opdrachtgevers 
+
+        [HttpGet("opdrachtgevers")]
+        public IActionResult GetOpdrachtgevers()
+        {
+            var opdrachtgevers = OC.Opdrachtgever.ToList();
+            return Ok(opdrachtgevers);
+        }
+
     }
 }
