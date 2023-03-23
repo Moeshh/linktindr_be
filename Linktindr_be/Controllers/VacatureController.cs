@@ -9,11 +9,10 @@ using Microsoft.EntityFrameworkCore;
 namespace Linktindr_be.Controllers {
     [Route("api/[controller]")]
     [ApiController]
-    public class VacatureController : ControllerBase {
-        private OurContext OC;
+    public class VacatureController : BaseController {
 
-        public VacatureController(OurContext OC) {
-            this.OC = OC;
+        public VacatureController(OurContext OC) : base(OC)
+        {
         }
 
         // GET: api/<VacatureController>
@@ -96,15 +95,6 @@ namespace Linktindr_be.Controllers {
             OC.SaveChanges();
 
             return true;
-        }
-
-        // Lijst met bestaande opdrachtgevers vacature/opdrachtgevers 
-
-        [HttpGet("opdrachtgevers")]
-        public IActionResult GetOpdrachtgevers()
-        {
-            var opdrachtgevers = OC.Opdrachtgever.ToList();
-            return Ok(opdrachtgevers);
         }
 
     }

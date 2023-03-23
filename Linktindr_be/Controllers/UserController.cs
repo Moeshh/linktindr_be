@@ -79,5 +79,12 @@ namespace Linktindr_be.Controllers
             return new LoginResponseDto();
         }
 
+        [HttpDelete]
+        [Route("revoke")]
+        public void deleteToken()
+        {
+            // 
+        }
+
     }
 }

@@ -12,11 +12,8 @@ namespace dbcontext
         public DbSet<Sollicitatie> Sollicitatie { get; set; }
         public DbSet<TalentManager> TalentManager { get; set; }
         public DbSet<Vacature> Vacature { get; set; }
-<<<<<<< HEAD
         public DbSet<Skill> Skill { get; set; }
-=======
 
->>>>>>> main
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
 
             // Skill

@@ -12,6 +12,8 @@ namespace dbcontext.Classes {
         public string? Name { get; set; }
         public string? Telephone { get; set; }
         public string? Token { get; set; }
+
+        public abstract UserType GetUserType();
     }
 /*
     public class Users_noid {

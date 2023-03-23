@@ -10,21 +10,18 @@ using System.Diagnostics;
 namespace Linktindr_be.Controllers {
     [Route("api/[controller]")]
     [ApiController]
-    public class MedewerkerController : ControllerBase {
-        
-        private readonly OurContext OC;
-
-        public MedewerkerController(OurContext OC) {
-            this.OC = OC;
+    public class MedewerkerController : BaseController
+    {
+        public MedewerkerController(OurContext OC): base(OC) {
         }
 
         // GET: api/<MedewerkerController>
         [HttpGet]
-        public List<MedewerkerDto> Get() {            
+        public List<MedewerkerDto> Get() {
             return OC.Medewerker.Include(m => m.TalentManager)
                 .Select(m => new MedewerkerDto(m))
                 .ToList();
-            
+
             /*List<Medewerker> test = System.IO.File.ReadAllLines("C:\\Users\\vivo-\\source\\repos\\Linktindr_be\\Linktindr_be\\dataSet_linktindr_werknemer.csv")
                 .Skip(1)
                 .Select(v => Medewerker.FromCsv(v))
