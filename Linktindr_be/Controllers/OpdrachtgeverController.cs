@@ -8,12 +8,10 @@ using Microsoft.AspNetCore.Mvc;
 namespace Linktindr_be.Controllers {
     [Route("api/[controller]")]
     [ApiController]
-    public class OpdrachtgeverController : ControllerBase {
+    public class OpdrachtgeverController : BaseController {
         
-        private readonly OurContext OC;
-
-        public OpdrachtgeverController(OurContext OC) {
-            this.OC = OC;
+        public OpdrachtgeverController(OurContext OC) : base(OC)
+        {
         }
 
         // GET: api/<ValuesController>

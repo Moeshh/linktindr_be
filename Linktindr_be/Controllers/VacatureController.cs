@@ -9,17 +9,16 @@ using Microsoft.EntityFrameworkCore;
 namespace Linktindr_be.Controllers {
     [Route("api/[controller]")]
     [ApiController]
-    public class VacatureController : ControllerBase {
-        private OurContext OC;
+    public class VacatureController : BaseController {
 
-        public VacatureController(OurContext OC) {
-            this.OC = OC;
+        public VacatureController(OurContext OC) : base(OC)
+        {
         }
 
         // GET: api/<VacatureController>
         [HttpGet]
         public IEnumerable<VacatureDto> Get() {
-            return OC.Vacatures.Include(v => v.Opdrachtgever)
+            return OC.Vacature.Include(v => v.Opdrachtgever)
                 .Select(v => new VacatureDto(v))
                 .ToList();
         }
@@ -27,7 +26,7 @@ namespace Linktindr_be.Controllers {
         // GET (specific) api/<VacatureController>/{id}
         [HttpGet("{id}")]
         public VacatureDto? Get(int id) {
-            Vacature? v = OC.Vacatures.Find(id);
+            Vacature? v = OC.Vacature.Include(m => m.Opdrachtgever).FirstOrDefault(v => v.Id == id);
             if (v == null)
                 return null;
 
@@ -59,7 +58,7 @@ namespace Linktindr_be.Controllers {
         // PUT api/<VacatureController>/update
         [HttpPut("update/{id:int}")]
         public bool Put(int id, [FromBody] SaveVacatureDto v) {
-            Vacature? voc = OC.Vacatures.Find(id);
+            Vacature? voc = OC.Vacature.Find(id);
             if(voc == null) {
                 return false;
             }
@@ -78,7 +77,7 @@ namespace Linktindr_be.Controllers {
             voc.Startdate = v.Startdate;
             voc.Enddate = v.Enddate;
 
-            OC.Vacatures.Update(voc);
+            OC.Vacature.Update(voc);
             OC.SaveChanges();
 
             return true;
@@ -87,12 +86,12 @@ namespace Linktindr_be.Controllers {
         // DELETE api/<VacatureController>/delete
         [HttpDelete("delete")]
         public bool Delete(int id) {
-            Vacature? v = OC.Vacatures.Find(id);
+            Vacature? v = OC.Vacature.Find(id);
             if(v == null) {
                 return false;
             }
 
-            OC.Vacatures.Remove(v);
+            OC.Vacature.Remove(v);
             OC.SaveChanges();
 
             return true;

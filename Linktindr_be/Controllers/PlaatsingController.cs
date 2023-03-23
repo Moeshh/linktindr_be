@@ -8,12 +8,10 @@ using Microsoft.AspNetCore.Mvc;
 namespace Linktindr_be.Controllers {
     [Route("api/[controller]")]
     [ApiController]
-    public class PlaatsingController : ControllerBase {
+    public class PlaatsingController : BaseController {
         
-        private readonly OurContext OC;
-
-        public PlaatsingController(OurContext OC) {
-            this.OC = OC;
+        public PlaatsingController(OurContext OC) : base(OC)
+        {
         }
 
         // GET: api/<ValuesController>

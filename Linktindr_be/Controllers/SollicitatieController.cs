@@ -9,12 +9,10 @@ using Microsoft.EntityFrameworkCore;
 namespace Linktindr_be.Controllers {
     [Route("api/[controller]")]
     [ApiController]
-    public class SollicitatieController : ControllerBase {
+    public class SollicitatieController : BaseController {
 
-        private readonly OurContext OC;
-
-        public SollicitatieController(OurContext OC) {
-            this.OC = OC;
+        public SollicitatieController(OurContext OC) : base(OC)
+        {
         }
 
         // GET: api/<ValuesController>
@@ -50,7 +48,7 @@ namespace Linktindr_be.Controllers {
             if (m == null)
                 return false;
 
-            Vacature? v = OC.Vacatures.Find(sni.VacatureId);
+            Vacature? v = OC.Vacature.Find(sni.VacatureId);
             if (v == null)
                 return false;
 
@@ -81,7 +79,7 @@ namespace Linktindr_be.Controllers {
             if (m == null)
                 return false;
 
-            Vacature? v = OC.Vacatures.Find(saveDto.VacatureId);
+            Vacature? v = OC.Vacature.Find(saveDto.VacatureId);
             if (v == null)
                 return false;
 
