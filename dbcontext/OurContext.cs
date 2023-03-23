@@ -11,7 +11,7 @@ namespace dbcontext
         public DbSet<Plaatsing> Plaatsing { get; set; }
         public DbSet<Sollicitatie> Sollicitatie { get; set; }
         public DbSet<TalentManager> TalentManager { get; set; }
-        public DbSet<Vacature> Vacatures { get; set; }
+        public DbSet<Vacature> Vacature { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
 
