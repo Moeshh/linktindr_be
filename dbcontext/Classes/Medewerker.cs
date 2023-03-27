@@ -12,6 +12,11 @@
         public virtual TalentManager TalentManager { get; set; }
         public virtual ICollection<Skill>? Skill { get; set; }
         public virtual ICollection<Medewerker>? Medewerkers { get; set; }
+
+        public override UserType GetUserType()
+        {
+            return UserType.MEDEWERKER;
+        }
     }
 
 }

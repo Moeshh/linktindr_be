@@ -1,20 +1,33 @@
 ﻿using dbcontext;
 using dbcontext.Classes;
 using Linktindr_be.Dto;
+using Linktindr_be.Utils;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Linktindr_be.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController
+    public class UserController : ControllerBase
     {
-        private OurContext OC;
+        private readonly OurContext OC;
 
         public UserController(OurContext OC)
         {
             this.OC = OC;
+        }
+
+        [HttpGet]
+        public User loggedInUser()
+        {
+            bool hasAuthorization = HttpContext.Items.ContainsKey("User");
+            if (hasAuthorization)
+            {
+                User? u = (User)HttpContext.Items["User"];
+                return u;
+            }
+
+            return null;
         }
 
         [HttpPost]
@@ -24,34 +37,41 @@ namespace Linktindr_be.Controllers
             // Check medewerker
             Medewerker? m = OC.Medewerker.FirstOrDefault(u => u.Email.Equals(dto.Email) && u.Password.Equals(dto.Password));
             if (m != null) {
-                LoginResponseDto LRD = new LoginResponseDto();
-                LRD.Success = true;
-                LRD.Token = m.Id.ToString();
-                LRD.Usertype = "Medewerker";
-                return LRD;
+                m.Token = StringUtils.RandomToken();
+                OC.Medewerker.Update(m);
+                OC.SaveChanges();
+
+                return new LoginResponseDto(m);
             }
 
             // Check opdrachtgever
             Opdrachtgever? o = OC.Opdrachtgever.FirstOrDefault(u => u.Email.Equals(dto.Email) && u.Password.Equals(dto.Password));
             if(o != null) {
-                LoginResponseDto LRD = new LoginResponseDto();
-                LRD.Success = true;
-                LRD.Token = o.Id.ToString();
-                LRD.Usertype = "Opdrachtgever";
-                return LRD;
+                o.Token = StringUtils.RandomToken();
+                OC.Opdrachtgever.Update(o);
+                OC.SaveChanges();
+
+                return new LoginResponseDto(o);
             }
 
             // Check talentmanager
             TalentManager? t = OC.TalentManager.FirstOrDefault(u => u.Email.Equals(dto.Email) && u.Password.Equals(dto.Password));
             if(t != null) {
-                LoginResponseDto LRD = new LoginResponseDto();
-                LRD.Success = true;
-                LRD.Token = t.Id.ToString();
-                LRD.Usertype = "Talentmanager";
-                return LRD;
+                t.Token = StringUtils.RandomToken();
+                OC.TalentManager.Update(t);
+                OC.SaveChanges();
+
+                return new LoginResponseDto(t);
             }
 
             return new LoginResponseDto();
+        }
+
+        [HttpDelete]
+        [Route("revoke")]
+        public void deleteToken()
+        {
+            // 
         }
 
     }
