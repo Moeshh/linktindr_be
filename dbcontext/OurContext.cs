@@ -12,38 +12,37 @@ namespace dbcontext
         public DbSet<Sollicitatie> Sollicitatie { get; set; }
         public DbSet<TalentManager> TalentManager { get; set; }
         public DbSet<Vacature> Vacature { get; set; }
-<<<<<<< HEAD
         public DbSet<Skill> Skill { get; set; }
-=======
-
->>>>>>> main
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
 
             // Skill
 
             modelBuilder.Entity<Skill>()
-                .Property(e => e.Language)
+                .Property(s => s.Language)
                 .IsRequired()
                 .HasConversion(
-                    v => v.ToString(),
-                    v => Enum.Parse<Language>(v));
+                    s => s.ToString(),
+                    s => Enum.Parse<Language>(s));
 
             modelBuilder.Entity<Skill>()
                 .Property(e => e.Level)
                 .IsRequired()
                 .HasConversion(
-                    v => v.ToString(),
-                    v => Enum.Parse<Level>(v));
+                    s => s.ToString(),
+                    s => Enum.Parse<Level>(s));
 
             modelBuilder.Entity<Skill>()
-                .Property(e => e.Title)
+                .Property(s => s.Title)
                 .HasMaxLength(255)
                 .HasColumnType("VARCHAR(255)");
 
             modelBuilder.Entity<Skill>()
-                .Property(e => e.Description)
+                .Property(s => s.Description)
                 .HasMaxLength(255)
                 .HasColumnType("VARCHAR(255)");
+
+            modelBuilder.Entity<Skill>()
+            .HasOne(s => s.Medewerker);
 
             // Medewerker
 
@@ -107,6 +106,8 @@ namespace dbcontext
             modelBuilder.Entity<Medewerker>()
                 .HasOne(m => m.TalentManager);
 
+            modelBuilder.Entity<Medewerker>()
+                .HasMany(m => m.Skill);
 
             // Talentmanager
 

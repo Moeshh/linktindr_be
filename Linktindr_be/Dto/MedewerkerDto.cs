@@ -23,6 +23,8 @@ namespace Linktindr_be.Dto
         public string TalentManagerEmail { get; set; }
         public string TalentManagerTelephone { get; set; }
 
+        public ICollection<SkillDto>? Skill { get; set; }
+
         public MedewerkerDto() { }
 
         public MedewerkerDto(Medewerker m)
@@ -43,6 +45,8 @@ namespace Linktindr_be.Dto
             this.TalentManagerName = m.TalentManager.Name;
             this.TalentManagerEmail = m.TalentManager.Email;
             this.TalentManagerTelephone = m.TalentManager.Telephone;
+
+            this.Skill = (ICollection<SkillDto>?)m.Skill;
         }
     }
 }
