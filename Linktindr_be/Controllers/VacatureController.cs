@@ -93,7 +93,7 @@ namespace Linktindr_be.Controllers {
         }
 
         // DELETE api/<VacatureController>/delete
-        [HttpDelete("delete")]
+        [HttpDelete("delete/{id:int}")]
         public bool Delete(int id) {
             Vacature? v = OC.Vacature.Find(id);
             if(v == null) {
