@@ -5,7 +5,7 @@ namespace Linktindr_be.Dto
     public class SollicitatieDto
     {
         public int Id { get; set; }
-        public StatusEnum Status { get; set; }
+        public Status Status { get; set; }
         public bool? Medewerker_akkoord { get; set; }
         public bool? Opdrachtgever_akkoord { get; set; }
 
@@ -21,7 +21,7 @@ namespace Linktindr_be.Dto
         public Specialization MedewerkerUitstroomrichting { get; set; }
         public string MedewerkerPhoto { get; set; }
         public string MedewerkerProfileText { get; set; }
-        public int MedewerkerTalentManagerId { get; set; }
+        public int TalentManagerId { get; set; }
 
         //variabelen van gerelateerde vacature
         public int VacatureId { get; set; }
@@ -31,7 +31,9 @@ namespace Linktindr_be.Dto
         public string VacatureLocation { get; set; }
         public DateTime VacatureStartdate { get; set; }
         public DateTime VacatureEnddate { get; set; }
-        public int VacatureOpdrachtgeverId { get; set; }
+
+        public int OpdrachtgeverId { get; set; }
+        public string OpdrachtgeverName { get; set; }
 
         public SollicitatieDto() { }
 
@@ -53,7 +55,7 @@ namespace Linktindr_be.Dto
             this.MedewerkerUitstroomrichting = s.Medewerker.Uitstroomrichting;
             this.MedewerkerPhoto = s.Medewerker.Photo;
             this.MedewerkerProfileText = s.Medewerker.ProfileText;
-            this.MedewerkerTalentManagerId = s.Medewerker.TalentManager.Id;
+            this.TalentManagerId = s.Medewerker.TalentManager.Id;
 
             this.VacatureId = s.Vacature.Id;
             this.VacatureTitle = s.Vacature.Title;
@@ -62,7 +64,8 @@ namespace Linktindr_be.Dto
             this.VacatureLocation = s.Vacature.Location;
             this.VacatureStartdate = s.Vacature.Startdate;
             this.VacatureEnddate = s.Vacature.Enddate;
-            this.VacatureOpdrachtgeverId = s.Vacature.Opdrachtgever.Id;
+            this.OpdrachtgeverId = s.Vacature.Opdrachtgever.Id;
+            this.OpdrachtgeverName = s.Vacature.Opdrachtgever.Name;
         }
     }
 }
