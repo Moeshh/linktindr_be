@@ -135,7 +135,7 @@ namespace dbcontext
                 .HasColumnType("VARCHAR(20)")
                 .IsRequired();
 
-            modelBuilder.Entity<Medewerker>()
+            modelBuilder.Entity<TalentManager>()
                 .Property(e => e.Token)
                 .HasMaxLength(100)
                 .HasColumnType("VARCHAR(100)");
@@ -163,11 +163,13 @@ namespace dbcontext
                 .HasColumnType("VARCHAR(20)")
                 .IsRequired();
 
-            modelBuilder.Entity<Medewerker>()
+            modelBuilder.Entity<Opdrachtgever>()
                 .Property(e => e.Token)
                 .HasMaxLength(100)
                 .HasColumnType("VARCHAR(100)");
 
+            modelBuilder.Entity<Opdrachtgever>()
+                .HasMany(t => t.Vacatures);
 
             // Sollicitatie
 
