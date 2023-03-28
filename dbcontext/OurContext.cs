@@ -13,34 +13,36 @@ namespace dbcontext
         public DbSet<TalentManager> TalentManager { get; set; }
         public DbSet<Vacature> Vacature { get; set; }
         public DbSet<Skill> Skill { get; set; }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
 
             // Skill
 
             modelBuilder.Entity<Skill>()
-                .Property(e => e.Language)
+                .Property(s => s.Language)
                 .IsRequired()
                 .HasConversion(
-                    v => v.ToString(),
-                    v => Enum.Parse<Language>(v));
+                    s => s.ToString(),
+                    s => Enum.Parse<Language>(s));
 
             modelBuilder.Entity<Skill>()
                 .Property(e => e.Level)
                 .IsRequired()
                 .HasConversion(
-                    v => v.ToString(),
-                    v => Enum.Parse<Level>(v));
+                    s => s.ToString(),
+                    s => Enum.Parse<Level>(s));
 
             modelBuilder.Entity<Skill>()
-                .Property(e => e.Title)
+                .Property(s => s.Title)
                 .HasMaxLength(255)
                 .HasColumnType("VARCHAR(255)");
 
             modelBuilder.Entity<Skill>()
-                .Property(e => e.Description)
+                .Property(s => s.Description)
                 .HasMaxLength(255)
                 .HasColumnType("VARCHAR(255)");
+
+            modelBuilder.Entity<Skill>()
+            .HasOne(s => s.Medewerker);
 
             // Medewerker
 
@@ -109,6 +111,8 @@ namespace dbcontext
             modelBuilder.Entity<Medewerker>()
                 .HasOne(m => m.TalentManager);
 
+            modelBuilder.Entity<Medewerker>()
+                .HasMany(m => m.Skill);
 
 
             // Talentmanager
@@ -131,7 +135,7 @@ namespace dbcontext
                 .HasColumnType("VARCHAR(20)")
                 .IsRequired();
 
-            modelBuilder.Entity<Medewerker>()
+            modelBuilder.Entity<TalentManager>()
                 .Property(e => e.Token)
                 .HasMaxLength(100)
                 .HasColumnType("VARCHAR(100)");
@@ -159,11 +163,13 @@ namespace dbcontext
                 .HasColumnType("VARCHAR(20)")
                 .IsRequired();
 
-            modelBuilder.Entity<Medewerker>()
+            modelBuilder.Entity<Opdrachtgever>()
                 .Property(e => e.Token)
                 .HasMaxLength(100)
                 .HasColumnType("VARCHAR(100)");
 
+            modelBuilder.Entity<Opdrachtgever>()
+                .HasMany(t => t.Vacatures);
 
             // Sollicitatie
 

@@ -2,6 +2,9 @@
 using dbcontext.Classes;
 using Linktindr_be.Dto;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -22,8 +25,14 @@ namespace Linktindr_be.Controllers {
 
         // GET (specific) api/<OpdrachtgeverController>/{id}
         [HttpGet("{id}")]
-        public Opdrachtgever? Get(int id) {
-            return OC.Opdrachtgever.Find(id);
+        public OpdrachtgeverDto? Get(int id) {
+            //return OC.Opdrachtgever.Find(id);
+            Opdrachtgever? o = OC.Opdrachtgever.Include(o => o.Vacatures).FirstOrDefault(o => o.Id == id);
+
+            if(o == null)
+                return null;
+
+            return new OpdrachtgeverDto(o);
         }
 
         // ADD api/<OpdrachtgeverController>/add

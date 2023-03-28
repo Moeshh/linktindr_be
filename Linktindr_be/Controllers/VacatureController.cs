@@ -33,6 +33,15 @@ namespace Linktindr_be.Controllers {
             return new VacatureDto(v);
         }
 
+        // GET (specific) api/<VacatureController>/opdrachtgever/{id}
+        [HttpGet("opdrachtgever/{id}")]
+        public IEnumerable<VacatureDto> GetByOpdrachtgever(int id) {
+            return OC.Vacature.Include(v => v.Opdrachtgever)
+                .Where(v => v.Opdrachtgever.Id == id)
+                .Select(v => new VacatureDto(v))
+                .ToList();
+        }
+
         // ADD api/<VacatureController>/add
         [HttpPost("add")]
         public bool Add([FromBody] SaveVacatureDto vni)

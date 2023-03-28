@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using dbcontext;
 
@@ -10,9 +11,11 @@ using dbcontext;
 namespace dbcontext.Migrations
 {
     [DbContext(typeof(OurContext))]
-    partial class OurContextModelSnapshot : ModelSnapshot
+    [Migration("20230323150931_UpdatedSkillKeys")]
+    partial class UpdatedSkillKeys
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -76,10 +79,6 @@ namespace dbcontext.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("VARCHAR(20)");
 
-                    b.Property<string>("Token")
-                        .HasMaxLength(100)
-                        .HasColumnType("VARCHAR(100)");
-
                     b.Property<string>("Uitstroomrichting")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -117,10 +116,6 @@ namespace dbcontext.Migrations
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("VARCHAR(20)");
-
-                    b.Property<string>("Token")
-                        .HasMaxLength(100)
-                        .HasColumnType("VARCHAR(100)");
 
                     b.HasKey("Id");
 
@@ -250,10 +245,6 @@ namespace dbcontext.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("VARCHAR(20)");
 
-                    b.Property<string>("Token")
-                        .HasMaxLength(100)
-                        .HasColumnType("VARCHAR(100)");
-
                     b.HasKey("Id");
 
                     b.ToTable("TalentManager");
@@ -370,7 +361,7 @@ namespace dbcontext.Migrations
             modelBuilder.Entity("dbcontext.Classes.Vacature", b =>
                 {
                     b.HasOne("dbcontext.Classes.Opdrachtgever", "Opdrachtgever")
-                        .WithMany("Vacatures")
+                        .WithMany()
                         .HasForeignKey("OpdrachtgeverId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -383,11 +374,6 @@ namespace dbcontext.Migrations
                     b.Navigation("Medewerkers");
 
                     b.Navigation("Skill");
-                });
-
-            modelBuilder.Entity("dbcontext.Classes.Opdrachtgever", b =>
-                {
-                    b.Navigation("Vacatures");
                 });
 
             modelBuilder.Entity("dbcontext.Classes.Skill", b =>
