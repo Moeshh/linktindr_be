@@ -79,7 +79,7 @@ namespace Linktindr_be.Controllers {
             return true;
         }
 
-        // PUT api/<SollicitatieController>/update
+        // PUT api/<SollicitatieController>/update/{id}
         [HttpPut("update/{id:int}")]
         public bool Put(int id, [FromBody] UpdateSollicitatieDto saveDto) {
             Sollicitatie? soc = OC.Sollicitatie.Find(id);
@@ -98,6 +98,7 @@ namespace Linktindr_be.Controllers {
             soc.Medewerker = m;
             soc.Vacature = v;
             soc.Status = Enum.Parse<Status>(saveDto.Status);
+            soc.Date = saveDto.Date;
             soc.Medewerker_akkoord = saveDto.Medewerker_akkoord;
             soc.Opdrachtgever_akkoord = saveDto.Opdrachtgever_akkoord;
 

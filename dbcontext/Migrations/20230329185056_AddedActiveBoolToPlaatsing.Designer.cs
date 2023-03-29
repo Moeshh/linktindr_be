@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using dbcontext;
 
@@ -10,9 +11,11 @@ using dbcontext;
 namespace dbcontext.Migrations
 {
     [DbContext(typeof(OurContext))]
-    partial class OurContextModelSnapshot : ModelSnapshot
+    [Migration("20230329185056_AddedActiveBoolToPlaatsing")]
+    partial class AddedActiveBoolToPlaatsing
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -139,6 +142,9 @@ namespace dbcontext.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<int>("MedewerkerId")
+                        .HasColumnType("int");
+
                     b.Property<int>("SollicitatieId")
                         .HasColumnType("int");
 
@@ -146,6 +152,8 @@ namespace dbcontext.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("MedewerkerId");
 
                     b.HasIndex("SollicitatieId");
 
@@ -320,11 +328,19 @@ namespace dbcontext.Migrations
 
             modelBuilder.Entity("dbcontext.Classes.Plaatsing", b =>
                 {
+                    b.HasOne("dbcontext.Classes.Medewerker", "Medewerker")
+                        .WithMany()
+                        .HasForeignKey("MedewerkerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("dbcontext.Classes.Sollicitatie", "Sollicitatie")
                         .WithMany()
                         .HasForeignKey("SollicitatieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Medewerker");
 
                     b.Navigation("Sollicitatie");
                 });

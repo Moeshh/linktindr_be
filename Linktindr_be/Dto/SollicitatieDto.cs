@@ -5,7 +5,9 @@ namespace Linktindr_be.Dto
     public class SollicitatieDto
     {
         public int Id { get; set; }
-        public Status Status { get; set; }
+        public Status StatusId { get; set; }
+        public string Status { get; set; }
+        public DateTime Date { get; set; }
         public bool? Medewerker_akkoord { get; set; }
         public bool? Opdrachtgever_akkoord { get; set; }
 
@@ -40,7 +42,9 @@ namespace Linktindr_be.Dto
         public SollicitatieDto(Sollicitatie s)
         {
             this.Id = s.Id;
-            this.Status = s.Status;
+            this.StatusId = s.Status;
+            this.Status = s.Status.ToString();
+            this.Date = s.Date;
             this.Medewerker_akkoord = s.Medewerker_akkoord;
             this.Opdrachtgever_akkoord = s.Opdrachtgever_akkoord;
 
