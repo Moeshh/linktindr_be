@@ -181,6 +181,10 @@ namespace dbcontext
                     v => Enum.Parse<Status>(v));
 
             modelBuilder.Entity<Sollicitatie>()
+            .Property(e => e.Date)
+            .HasColumnType("Datetime(6)");
+
+            modelBuilder.Entity<Sollicitatie>()
                 .Property(e => e.Medewerker_akkoord)
                 .HasColumnType("tinyint(1)")
                 .HasDefaultValue(0)

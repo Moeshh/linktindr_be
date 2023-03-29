@@ -2,6 +2,7 @@
 using dbcontext.Classes;
 using Linktindr_be.Dto;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -26,6 +27,19 @@ namespace Linktindr_be.Controllers {
             return OC.Plaatsing.Find(id);
         }
 
+        // GET (specific) api/<PlaatsingController>/talentmanager/{id}
+        [HttpGet("talentmanager/{id}")]
+        public IEnumerable<PlaatsingDto> GetByTalentmanager(int id) {
+            return OC.Plaatsing.Include(s => s.Sollicitatie)
+                .Include(s => s.Sollicitatie.Medewerker)
+                .Include(s => s.Sollicitatie.Medewerker.TalentManager)
+                .Where(s => s.Sollicitatie.Medewerker.TalentManager.Id == id)
+                .Include(s => s.Sollicitatie.Vacature)
+                .Include(s => s.Sollicitatie.Vacature.Opdrachtgever)
+                .Select(s => new PlaatsingDto(s))
+                .ToList();
+        }
+
         // ADD api/<PlaatsingController>/add
         [HttpPost("add")]
         public bool Add(SavePlaatsingDto saveDto) {
@@ -39,8 +53,9 @@ namespace Linktindr_be.Controllers {
 
             Plaatsing p = new Plaatsing();
             p.Sollicitatie = s;
-            p.Medewerker = m;
-            p.Started = DateTime.UtcNow;
+            p.StartDate = saveDto.StartDate;
+            p.EndDate = saveDto.EndDate;
+            p.Active = saveDto.Active;
 
             OC.Add(p);
             OC.SaveChanges();
@@ -62,6 +77,8 @@ namespace Linktindr_be.Controllers {
             Medewerker? m = OC.Medewerker.Find(saveDto.MedewerkerId);
             if (m == null)
                 return false;
+
+            poc.Active = saveDto.Active;
 
             OC.Plaatsing.Update(poc);
             OC.SaveChanges();
