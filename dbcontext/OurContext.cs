@@ -178,7 +178,7 @@ namespace dbcontext
                 .IsRequired()
                 .HasConversion(
                     v => v.ToString(),
-                    v => Enum.Parse<StatusEnum>(v));
+                    v => Enum.Parse<Status>(v));
 
             modelBuilder.Entity<Sollicitatie>()
                 .Property(e => e.Medewerker_akkoord)

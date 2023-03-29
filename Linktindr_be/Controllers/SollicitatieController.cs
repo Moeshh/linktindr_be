@@ -41,6 +41,18 @@ namespace Linktindr_be.Controllers {
             return new SollicitatieDto(s);
         }
 
+        // GET (specific) api/<SollicitatieController>/talentmanager/{id}
+        [HttpGet("talentmanager/{id}")]
+        public IEnumerable<SollicitatieDto> GetByTalentmanager(int id) {
+            return OC.Sollicitatie.Include(s => s.Medewerker)
+                .Where(s => s.Medewerker.TalentManager.Id == id)
+                .Include(s => s.Medewerker.TalentManager)
+                .Include(s => s.Vacature)
+                .Include(s => s.Vacature.Opdrachtgever)
+                .Select(s => new SollicitatieDto(s))
+                .ToList();
+        }
+
         // ADD api/<SollicitatieController>/add
         [HttpPost("add")]
         public bool Add(SaveSollicitatieDto sni) {
@@ -85,7 +97,7 @@ namespace Linktindr_be.Controllers {
 
             soc.Medewerker = m;
             soc.Vacature = v;
-            soc.Status = Enum.Parse<StatusEnum>(saveDto.Status);
+            soc.Status = Enum.Parse<Status>(saveDto.Status);
             soc.Medewerker_akkoord = saveDto.Medewerker_akkoord;
             soc.Opdrachtgever_akkoord = saveDto.Opdrachtgever_akkoord;
 
