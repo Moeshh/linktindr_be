@@ -53,5 +53,5 @@ jobs:
         with:
           app-name: 'linktindr'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_31F402E783E640AB87A4270DDE079423 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_501077874C254017A7268B4F9809C059 }}
           package: .
